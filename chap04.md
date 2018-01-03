@@ -75,61 +75,7 @@ command -options arguments
 
 ls 命令有大量的选项。表4-1列出了最常使用的选项。
 
-<table class="multi">
-<caption class="cap">Table 4-1: Common ls Options</caption>
-<tr>
-<th class="title" width="10%">Option</th>
-<th class="title" width="20%">Long Option</th>
-<th class="title">Description</th>
-</tr>
-<tr>
-<td>-a</td>
-<td>--all</td>
-<td>List all files, even those with names that
-begin with a period, which are normally not listed(i.e.,hidden).</td>
-</tr>
-<tr>
-<td>-d</td>
-<td>--directory</td>
-<td>Ordinaryly,if a directory is specified, ls
-will list the contents of the directory, not the directory
-itself. Use this option in conjunction with the -l option
-to see details about the directory rather than its contents.</td>
-</tr>
-<tr>
-<td>-F</td>
-<td>--classify</td>
-<td>This option will append an indicator character
-to the end of each listed name. For example, a '/' if the name is a directory.  </td>
-</tr>
-<tr>
-<td>-h</td>
-<td>--human-readable</td>
-<td>In long format listings, display file sizes in
-human readable format rather than in bytes.  </td>
-</tr>
-<tr>
-<td>-l</td>
-<td> </td>
-<td>Display results in long format.  </td>
-</tr>
-<tr>
-<td>-r</td>
-<td>--reverse</td>
-<td>Display the results in reverse order. Normally,
-ls display its results in ascending alphabetical order.  </td>
-</tr>
-<tr>
-<td>-S</td>
-<td> </td>
-<td>Sort results by file size. </td>
-</tr>
-<tr>
-<td>-t</td>
-<td> </td>
-<td>Sort by modification time. </td>
-</tr>
-</table>
+
 
 <table class="multi">
 <caption class="cap">表 4-1: ls 命令选项 </caption>
