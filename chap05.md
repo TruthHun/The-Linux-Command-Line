@@ -1,22 +1,7 @@
----
-layout: book
-title: 操作文件和目录
----
+#操作文件和目录
 
-At this point, we are ready for some real work! This chapter will introduce
-the following commands:
 
 此时此刻，我们已经准备好了做些真正的工作！这一章节将会介绍以下命令：
-
-* cp – Copy files and directories
-
-* mv – Move/rename files and directories
-
-* mkdir – Create directories
-
-* rm – Remove files and directories
-
-* ln – Create hard and symbolic links
 
 * cp — 复制文件和目录
 
@@ -28,406 +13,128 @@ the following commands:
 
 * ln — 创建硬链接和符号链接
 
-These five commands are among the most frequently used Linux commands. They
-are used for manipulating both files and directories.
-
 这五个命令属于最常使用的 Linux 命令之列。它们用来操作文件和目录。
 
-Now, to be frank, some of the tasks performed by these commands are more
-easily done with a graphical file manager. With a file manager, we can drag and drop a
-file from one directory to another, cut and paste files, delete files, etc. So why use these
-old command line programs?
+现在，坦诚地说，用图形文件管理器来完成一些由这些命令执行的任务会更容易些。使用文件管理器，我们可以把文件从一个目录拖放到另一个目录、剪贴和粘贴文件、删除文件等等。那么，为什么还使用早期的命令行程序呢？
 
-现在，坦诚地说，用图形文件管理器来完成一些由这些命令执行的任务会更容易些。使用文件管理器，
-我们可以把文件从一个目录拖放到另一个目录、剪贴和粘贴文件、删除文件等等。那么，
-为什么还使用早期的命令行程序呢？
+答案是命令行程序，功能强大灵活。虽然图形文件管理器能轻松地实现简单的文件操作，但是对于复杂的文件操作任务，则使用命令行程序比较容易完成。例如，怎样复制一个目录下的 HTML 文件到另一个目录，但这些 HTML 文件不存在于目标目录，或者是文件版本新于目标目录里的文件？要完成这个任务，使用文件管理器相当难，使用命令行相当容易：
 
-The answer is power and flexibility. While it is easy to perform simple file
-manipulations with a graphical file manager, complicated tasks can be easier with the
-command line programs. For example, how could we copy all the HTML files from one directory
-to another, but only copy files that do not exist in the destination directory or
-are newer than the versions in the destination directory? Pretty hard with a file
-manager. Pretty easy with the command line:
+```
+cp -u *.html destination
+```
 
-答案是命令行程序，功能强大灵活。虽然图形文件管理器能轻松地实现简单的文件操作，但是对于
-复杂的文件操作任务，则使用命令行程序比较容易完成。例如，怎样复制一个目录下的 HTML 文件
-到另一个目录，但这些 HTML 文件不存在于目标目录，或者是文件版本新于目标目录里的文件？
-要完成这个任务，使用文件管理器相当难，使用命令行相当容易：
+###5.1 通配符
 
-    cp -u *.html destination
+在开始使用命令之前，我们需要介绍一个使命令行如此强大的 shell 特性。因为 shell 频繁地使用文件名，shell 提供了特殊字符来帮助你快速指定一组文件名。这些特殊字符叫做通配符。使用通配符（也以文件名代换著称）允许你依据字符类型来选择文件名。下表列出这些通配符以及它们所选择的对象：
 
-### 通配符
+|通配符|匹配项|
+|-----|-----|
+|*|匹配任意多个字符（包括零个或一个）|
+|?|匹配任意一个字符（不包括零个）|
+|[characters]|匹配任意一个属于字符集中的字符|
+|[!characters]|匹配任意一个不是字符集中的字符|
+|[[:class:]]|匹配任意一个属于指定字符类中的字符|
 
-Before we begin using our commands, we need to talk about a shell feature that
-makes these commands so powerful. Since the shell uses filenames so much, it
-provides special characters to help you rapidly specify groups of filenames. These special
-characters are called wildcards. Using wildcards (which is also known as globbing) allow you
-to select filenames based on patterns of characters. The table below lists the wildcards
-and what they select:
 
-在开始使用命令之前，我们需要介绍一个使命令行如此强大的 shell 特性。因为 shell 频繁地使用
-文件名，shell 提供了特殊字符来帮助你快速指定一组文件名。这些特殊字符叫做通配符。
-使用通配符（也以文件名代换著称）允许你依据字符类型来选择文件名。下表列出这些通配符
-以及它们所选择的对象：
+下表列出了最常使用的字符类：
 
-<table class="multi" >
-<caption class="cap">Table 5-1: Wildcards</caption>
-<tr>
-<th class="title">Wildcard</th>
-<th class="title">Meaning</th>
-</tr>
-<tr>
-<td valign="top">*</td>
-<td valign="top">Matches any characters</td>
-</tr>
-<tr>
-<td valign="top">?</td>
-<td valign="top">Matches any single character</td>
-</tr>
-<tr>
-<td valign="top">[characters]</td>
-<td valign="top">Matches any character that is a member of the set characters</td>
-</tr>
-<tr>
-<td valign="top">[!characters]</td>
-<td valign="top">Matches any character that is not a member of the set
-characters</td>
-</tr>
-<tr>
-<td valign="top" width="25%">[[:class:]]</td>
-<td valign="top">Matches any character that is a member of the specified class</td>
-</tr>
-</table>
-
-<table class="multi">
-<caption class="cap">表5-1: 通配符</caption>
-<tr>
-<th class="title">通配符</th>
-<th class="title">意义</th>
-</tr>
-<tr>
-<td valign="top">*</td>
-<td valign="top">匹配任意多个字符（包括零个或一个）</td>
-</tr>
-<tr>
-<td valign="top">?</td>
-<td valign="top">匹配任意一个字符（不包括零个）</td>
-</tr>
-<tr>
-<td valign="top">[characters]</td>
-<td valign="top">匹配任意一个属于字符集中的字符</td>
-</tr>
-<tr>
-<td valign="top">[!characters]</td>
-<td valign="top">匹配任意一个不是字符集中的字符</td>
-</tr>
-<tr>
-<td valign="top" width="25%">[[:class:]]</td>
-<td valign="top">匹配任意一个属于指定字符类中的字符</td>
-</tr>
-</table>
-
-Table 5-2 lists the most commonly used character classes:
-
-表5-2列出了最常使用的字符类：
-
-<table class="multi">
-<caption class="cap">Table 5-2: Commonly Used Character Classes</caption>
-<tr>
-<th class="title">Character Class</th>
-<th class="title">Meaning</th>
-</tr>
-<tr>
-<td>[:alnum:]</td>
-<td>Matches any alphanumeric character</td>
-</tr>
-<tr>
-<td>[:alpha:]</td>
-<td>Matches any alphabetic character</td>
-</tr>
-<tr>
-<td>[:digit:]</td>
-<td>Matches any numeral</td>
-</tr>
-<tr>
-<td width="25%">[:lower:]</td>
-<td>Matches any lowercase letter</td>
-</tr>
-<tr>
-<td>[:upper:]</td>
-<td>Matches any uppercase letter</td>
-</tr>
-</table>
-
-<table class="multi">
-<caption class="cap">表5-2: 普遍使用的字符类</caption>
-<tr>
-<th class="title">字符类</th>
-<th class="title">意义</th>
-</tr>
-<tr>
-<td>[:alnum:]</td>
-<td>匹配任意一个字母或数字</td>
-</tr>
-<tr>
-<td>[:alpha:]</td>
-<td>匹配任意一个字母</td>
-</tr>
-<tr>
-<td>[:digit:]</td>
-<td>匹配任意一个数字</td>
-</tr>
-<tr>
-<td>[:lower:]</td>
-<td>匹配任意一个小写字母</td>
-</tr>
-<tr>
-<td width="25%">[:upper:]</td>
-<td>匹配任意一个大写字母</td>
-</tr>
-</table>
-
-Using wildcards makes it possible to construct very sophisticated selection criteria for
-filenames. Here are some examples of patterns and what they match:
+|字符类|匹配项|
+|-----|-----|
+|[:alnum:]|匹配任意一个字母或数字|
+|[:alpha:]|匹配任意一个字母|
+|[:digit:]|匹配任意一个数字|
+|[:lower:]|匹配任意一个小写字母|
+|[:upper:]|匹配任意一个大写字母|
 
 借助通配符，为文件名构建非常复杂的选择标准成为可能。下面是一些类型匹配的范例:
 
-<table class="multi">
-<caption class="cap">Table 5-3: Wildcard Examples</caption>
-<tr>
-<th class="title">Pattern</th>
-<th class="title">Matches</th>
-</tr>
-<tr>
-<td valign="top">*</td>
-<td valign="top">All files</td>
-</tr>
-<tr>
-<td valign="top">g*</td>
-<td valign="top">All file beginning with "g"</td>
-</tr>
-<tr>
-<td valign="top">b*.txt</td>
-<td valign="top">Any file beginning with "b" followed by any characters and
-ending with ".txt"</td>
-</tr>
-<tr>
-<td valign="top">Data???</td>
-<td valign="top">Any file beginning with "Data" followed by exactly three
-characters</td>
-</tr>
-<tr>
-<td valign="top">[abc]*</td>
-<td valign="top">Any file beginning with either an "a", a "b", or a "c"</td>
-</tr>
-<tr>
-<td valign="top">BACKUP.[0-9][0-9][0-9]</td>
-<td valign="top">Any file beginning with "BACKUP." followed by exactly three
-numerals</td>
-</tr>
-<tr>
-<td valign="top">[[:upper:]]*</td>
-<td valign="top">Any file beginning with an uppercase letter</td>
-</tr>
-<tr>
-<td valign="top">[![:digit:]]*</td>
-<td valign="top">Any file not beginning with a numeral</td>
-</tr>
-<tr>
-<td valign="top" width="25%">*[[:lower:]123]</td>
-<td valign="top">Any file ending with a lowercase letter or the numerals "1",
-"2", or "3"</td>
-</tr>
-</table>
+|模式|匹配项|
+|-----|-----|
+|*|所有文件|
+|g*|文件名以“g”开头的文件|
+|b*.txt|以"b"开头，中间有零个或任意多个字符，并以".txt"结尾的文件|
+|Data???|以“Data”开头，其后紧接着3个字符的文件|
+|[abc]*|文件名以"a","b",或"c"开头的文件|
+|BACKUP.[0-9][0-9][0-9]|以"BACKUP."开头，并紧接着3个数字的文件|
+|[[:upper:]]*|以大写字母开头的文件|
+|[![:digit:]]*|不以数字开头的文件|
+|*[[:lower:]123]|文件名以小写字母结尾，或以 “1”，“2”，或 “3” 结尾的文件|
 
-<table class="multi">
-<caption class="cap">表5-3: 通配符范例</caption>
-<tr>
-<th class="title">模式</th>
-<th class="title">匹配对象</th>
-</tr>
-<tr>
-<td valign="top">*</td>
-<td valign="top">所有文件</td>
-</tr>
-<tr>
-<td valign="top">g*</td>
-<td valign="top">文件名以“g”开头的文件</td>
-</tr>
-<tr>
-<td valign="top">b*.txt</td>
-<td valign="top">以"b"开头，中间有零个或任意多个字符，并以".txt"结尾的文件</td>
-</tr>
-<tr>
-<td valign="top">Data???</td>
-<td valign="top">以“Data”开头，其后紧接着3个字符的文件</td>
-</tr>
-<tr>
-<td valign="top">[abc]*</td>
-<td valign="top">文件名以"a","b",或"c"开头的文件</td>
-</tr>
-<tr>
-<td valign="top">BACKUP.[0-9][0-9][0-9]</td>
-<td valign="top">以"BACKUP."开头，并紧接着3个数字的文件</td>
-</tr>
-<tr>
-<td valign="top">[[:upper:]]*</td>
-<td valign="top">以大写字母开头的文件</td>
-</tr>
-<tr>
-<td valign="top">[![:digit:]]*</td>
-<td valign="top">不以数字开头的文件</td>
-</tr>
-<tr>
-<td valign="top" width="25%">*[[:lower:]123]</td>
-<td valign="top">文件名以小写字母结尾，或以 “1”，“2”，或 “3” 结尾的文件</td>
-</tr>
-</table>
-
-Wildcards can be used with any command that accepts filenames as arguments,
-but we’ll talk more about that in Chapter 8.
 
 接受文件名作为参数的任何命令，都可以使用通配符，我们会在第八章更深入地谈到这个知识点。
 
-> Character Ranges
+
+> ####字符范围
 >
-> 字符范围
+> 如果你用过别的类 Unix 系统的操作环境，或者是读过这方面的书籍，你可能遇到过[A-Z]或[a-z]形式的字符范围表示法。这些都是传统的 Unix 表示法，并且在早期的 Linux 版本中仍有效。虽然它们仍然起作用，但是你必须小心地使用它们，因为它们不会产生你期望的输出结果，除非你合理地配置它们。从现在开始，你应该避免使用它们，并且用字符类来代替它们。
 >
-> If you are coming from another Unix-like environment or have been reading
-some other books on this subject, you may have encountered the [A-Z] or the
-[a-z] character range notations. These are traditional Unix notations and
-worked in older versions of Linux as well. They can still work, but you have to
-be very careful with them because they will not produce the expected results
-unless properly configured. For now, you should avoid using them and use
-character classes instead.
->
-> 如果你用过别的类 Unix 系统的操作环境，或者是读过这方面的书籍，你可能遇到过[A-Z]或
-[a-z]形式的字符范围表示法。这些都是传统的 Unix 表示法，并且在早期的 Linux 版本中仍有效。
-虽然它们仍然起作用，但是你必须小心地使用它们，因为它们不会产生你期望的输出结果，除非
-你合理地配置它们。从现在开始，你应该避免使用它们，并且用字符类来代替它们。
->
-> Wildcards Work In The GUI Too
->
-> 通配符在 GUI 中也有效
->
-> Wildcards are especially valuable not only because they are used so frequently on
-the command line, but are also supported by some graphical file managers.
+> ####通配符在 GUI 中也有效
 >
 > 通配符非常重要，不仅因为它们经常用在命令行中，而且一些图形文件管理器也支持它们。
 >
-> * In Nautilus (the file manager for GNOME), you can select files using the
-Edit/Select Pattern menu item. Just enter a file selection pattern with
-wildcards and the files in the currently viewed directory will be highlighted
-for selection.
+> * 在 Nautilus (GNOME 文件管理器）中，可以通过 Edit/Select 模式菜单项来选择文件。输入一个用通配符表示的文件选择模式后，那么当前所浏览的目录中，所匹配的文件名就会高亮显示。
 >
-> * In Dolphin and Konqueror (the file managers for KDE), you can enter
-wildcards directly on the location bar. For example, if you want to see all the
-files starting with a lowercase “u” in the /usr/bin directory, type “/usr/bin/u*”
-into the location bar and it will display the result.
+> * 在 Dolphin 和 Konqueror（KDE 文件管理器）中，可以在地址栏中直接输入通配符。例如，如果你想查看目录 /usr/bin 中，所有以小写字母 'u' 开头的文件，在地址栏中敲入 '/usr/bin/u*'，则 文件管理器会显示匹配的结果。
 >
-> * 在 Nautilus (GNOME 文件管理器）中，可以通过 Edit/Select 模式菜单项来选择文件。
-输入一个用通配符表示的文件选择模式后，那么当前所浏览的目录中，所匹配的文件名就会高亮显示。
->
-> * 在 Dolphin 和 Konqueror（KDE 文件管理器）中，可以在地址栏中直接输入通配符。例如，
-如果你想查看目录 /usr/bin 中，所有以小写字母 'u' 开头的文件，
-在地址栏中敲入 '/usr/bin/u*'，则 文件管理器会显示匹配的结果。
->
-> Many ideas originally found in the command line interface make their way into
-the graphical interface, too. It is one of the many things that make the Linux
-desktop so powerful.
->
-> 最初源于命令行界面中的想法，在图形界面中也适用。这就是使 Linux 桌面系统
-如此强大的众多原因中的一个
+> 最初源于命令行界面中的想法，在图形界面中也适用。这就是使 Linux 桌面系统如此强大的众多原因中的一个
 
-### mkdir - 创建目录
-
-The mkdir command is used to create directories. It works like this:
+<br />
+###5.2 mkdir - 创建目录
 
 mkdir 命令是用来创建目录的。它这样工作：
 
-    mkdir directory...
+```
+mkdir directory...
+```
 
-__A note on notation:__ When three periods follow an argument in the
-description of a command (as above), it means that the argument can be
-repeated, thus:
+------
 
-__注意表示法:__ 在描述一个命令时（如上所示），当有三个圆点跟在一个命令的参数后面，
-这意味着那个参数可以重复，就像这样：
+**注意表示法:**
+在描述一个命令时（如上所示），当有三个圆点跟在一个命令的参数后面，这意味着那个参数可以重复，就像这样：
 
-    mkdir dir1
-
-would create a single directory named "dir1", while
-
+```
+mkdir dir1
+```
 会创建一个名为"dir1"的目录，而
 
-    mkdir dir1 dir2 dir3
-
-would create three directokries named "dir1", "dir2", "dir3".
+```
+mkdir dir1 dir2 dir3
+```
 
 会创建三个目录，名为 dir1, dir2, dir3。
 
-### cp - 复制文件和目录
+------
 
-The cp command copies files or directories. It can be used two different ways:
+###5.3 cp - 复制文件和目录
 
 cp 命令，复制文件或者目录。它有两种使用方法：
 
-    cp item1 item2
-
-to copy the single file or directory “item1” to file or directory “item2” and:
+```
+cp item1 item2
+```
 
 复制单个文件或目录"item1"到文件或目录"item2"，和：
 
-    cp item... directory
-
-to copy multiple items (either files or directories) into a directory.
+```
+cp item... directory
+```
 
 复制多个项目（文件或目录）到一个目录下。
 
-### 有用的选项和实例
+下表列举了 cp 命令一些有用的选项（短选项和等效的长选项）：
 
-Here are some of the commonly used options (the short option and the equivalent long option) for cp:
+|选项|含义|
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
+|||
 
-这里列举了 cp 命令一些有用的选项（短选项和等效的长选项）：
-
-<table class="multi">
-<caption class="cap">Table 5-4: cp Options</caption>
-<tr>
-<th class="title">Option</th>
-<th class="title">Meaning</th>
-</tr>
-<tr>
-<td valign="top" width="25%">-a, --archive</td>
-<td valign="top">Copy the files and directories and all of their attributes,
-including ownerships and permissions. Normally, copies take on the default
-attributes of the user performing the copy</td>
-</tr>
-<tr>
-<td valign="top">-i, --interactive</td>
-<td valign="top">Before overwriting an existing file, prompt the user for
-confirmation. If this option is not specified, cp will
-silently overwrite files.
-</td>
-</tr>
-<tr>
-<td valign="top">-r, --recursive</td>
-<td valign="top">Recursively copy directories and their contents. This
-option (or the -a option) is required when copying directories.
-</td>
-</tr>
-<tr>
-<td valign="top">-u, --update </td>
-<td valign="top">When copying files from one directory to another, only
-copy files that either don't exist, or are newer than the
-existing corresponding files, in the destination
-directory.</td>
-</tr>
-<tr>
-<td valign="top">-v, --verbose</td>
-<td valign="top">Display informative messages as the copy is
-performed.</td>
-</tr>
-</table>
 
 <table class="multi">
 <caption class="cap">表5-4: cp 选项</caption>
