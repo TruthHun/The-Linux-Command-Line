@@ -249,460 +249,268 @@ ln -s item link
 
 #####5.6.1 硬链接
 
+与更加现代的符号链接相比，硬链接是最初 Unix 创建链接的方式。每个文件默认会有一个硬链接，这个硬链接给予文件名字。我们每创建一个硬链接，就为一个文件创建了一个额外的目录项。硬链接有两个重要局限性：
 
-
-
-与更加现代的符号链接相比，硬链接是最初 Unix 创建链接的方式。每个文件默认会有一个硬链接，
-这个硬链接给予文件名字。我们每创建一个硬链接，就为一个文件创建了一个额外的目录项。
-硬链接有两个重要局限性：
-
-1. A hard link cannot reference a file outside its own file system. This means a link
-may not reference a file that is not on the same disk partition as the link itself.
-
-2. A hard link may not reference a directory.
-
-^
-1. 一个硬链接不能关联它所在文件系统之外的文件。这是说一个链接不能关联
-与链接本身不在同一个磁盘分区上的文件。
+1. 一个硬链接不能关联它所在文件系统之外的文件。这是说一个链接不能关联与链接本身不在同一个磁盘分区上的文件。
 
 2. 一个硬链接不能关联一个目录。
 
-A hard link is indistinguishable from the file itself. Unlike a symbolic link, when you list
-a directory containing a hard link you will see no special indication of the link. When a
-hard link is deleted, the link is removed but the contents of the file itself continue to exist
-(that is, its space is not deallocated) until all links to the file are deleted.
-It is important to be aware of hard links because you might encounter them from time to
-time, but modern practice prefers symbolic links, which we will cover next.
+一个硬链接和文件本身没有什么区别。不像符号链接，当你列出一个包含硬链接的目录内容时，你会看到没有特殊的链接指示说明。当一个硬链接被删除时，这个链接被删除，但是文件本身的内容仍然存在（这是说，它所占的磁盘空间不会被重新分配），直到所有关联这个文件的链接都删除掉。知道硬链接很重要，因为你可能有时会遇到它们，但现在实际中更喜欢使用符号链接，下一步我们会讨论符号链接。
 
-一个硬链接和文件本身没有什么区别。不像符号链接，当你列出一个包含硬链接的目录
-内容时，你会看到没有特殊的链接指示说明。当一个硬链接被删除时，这个链接
-被删除，但是文件本身的内容仍然存在（这是说，它所占的磁盘空间不会被重新分配），
-直到所有关联这个文件的链接都删除掉。知道硬链接很重要，因为你可能有时
-会遇到它们，但现在实际中更喜欢使用符号链接，下一步我们会讨论符号链接。
+#####5.6.2 符号链接
 
-### 符号链接
+创建符号链接是为了克服硬链接的局限性。符号链接生效，是通过创建一个特殊类型的文件，这个文件包含一个关联文件或目录的文本指针。在这一方面，它们和 Windows 的快捷方式差不多，当然，符号链接早于 Windows 的快捷方式很多年;-)
 
-Symbolic links were created to overcome the limitations of hard links. Symbolic links
-work by creating a special type of file that contains a text pointer to the referenced file or
-directory. In this regard, they operate in much the same way as a Windows shortcut
-though of course, they predate the Windows feature by many years ;-)
+一个符号链接指向一个文件，而且这个符号链接本身与其它的符号链接几乎没有区别。例如，如果你往一个符号链接里面写入东西，那么相关联的文件也被写入。然而，当你删除一个符号链接时，只有这个链接被删除，而不是文件自身。如果先于符号链接删除文件，这个链接仍然存在，但是不指向任何东西。在这种情况下，这个链接被称为坏链接。在许多实现中，ls 命令会以不同的颜色展示坏链接，比如说红色，来显示它们的存在。
 
-创建符号链接是为了克服硬链接的局限性。符号链接生效，是通过创建一个
-特殊类型的文件，这个文件包含一个关联文件或目录的文本指针。在这一方面，
-它们和 Windows 的快捷方式差不多，当然，符号链接早于 Windows 的快捷方式
-很多年;-)
+关于链接的概念，看起来很迷惑，但不要胆怯。我们将要试着练习这些命令，希望，它变得清晰起来。
 
-A file pointed to by a symbolic link, and the symbolic link itself are largely
-indistinguishable from one another. For example, if you write some something to the
-symbolic link, the referenced file is also written to. However when you delete a symbolic
-link, only the link is deleted, not the file itself. If the file is deleted before the symbolic
-link, the link will continue to exist, but will point to nothing. In this case, the link is said
-to be broken. In many implementations, the ls command will display broken links in a
-distinguishing color, such as red, to reveal their presence.
+###5.7 创建游戏场（实战演习）
 
-一个符号链接指向一个文件，而且这个符号链接本身与其它的符号链接几乎没有区别。
-例如，如果你往一个符号链接里面写入东西，那么相关联的文件也被写入。然而，
-当你删除一个符号链接时，只有这个链接被删除，而不是文件自身。如果先于符号链接
-删除文件，这个链接仍然存在，但是不指向任何东西。在这种情况下，这个链接被称为
-坏链接。在许多实现中，ls 命令会以不同的颜色展示坏链接，比如说红色，来显示它们
-的存在。
+下面我们将要做些真正的文件操作，让我们先建立一个安全地带，来玩一下文件操作命令。首先，我们需要一个工作目录。在我们的家目录下创建一个叫做“playground”的目录。
 
-The concept of links can seem very confusing, but hang in there. We're going to try all
-this stuff and it will, hopefully, become clear.
+#####5.7.1 创建目录
 
-关于链接的概念，看起来很迷惑，但不要胆怯。我们将要试着练习
-这些命令，希望，它变得清晰起来。
+mkdir 命令被用来创建目录。首先确定我们在我们的家目录下，来创建 playground 目录，然后创建这个新目录：
 
-### 创建游戏场（实战演习）
+```
+[me@linuxbox ~]$ cd
+[me@linuxbox ~]$ mkdir playground
+```
 
-Since we are going to do some real file manipulation, let's build a safe place to “play”
-with our file manipulation commands. First we need a directory to work in. We'll create
-one in our home directory and call it “playground.”
+为了让我们的游戏场更加有趣，在 playground 目录下创建一对目录，分别叫做 “dir1” 和 “dir2”。更改我们的当前工作目录到 playground，然后执行 mkdir 命令：
 
-下面我们将要做些真正的文件操作，让我们先建立一个安全地带，
-来玩一下文件操作命令。首先，我们需要一个工作目录。在我们的
-家目录下创建一个叫做“playground”的目录。
-
-### 创建目录
-
-The mkdir command is used to create a directory. To create our playground
-directory we will first make sure we are in our home directory and will then
-create the new directory:
-
-mkdir 命令被用来创建目录。首先确定我们在我们的家目录下，来创建 playground 目录，
-然后创建这个新目录：
-
-    [me@linuxbox ~]$ cd
-    [me@linuxbox ~]$ mkdir playground
-
-To make our playground a little more interesting, let's create a couple of
-directories inside it called “dir1” and “dir2”. To do this, we will change
-our current working directory to playground and execute another mkdir:
-
-为了让我们的游戏场更加有趣，在 playground 目录下创建一对目录
-，分别叫做 “dir1” 和 “dir2”。更改我们的当前工作目录到 playground，然后
-执行 mkdir 命令：
-
-    [me@linuxbox ~]$ cd playground
-    [me@linuxbox playground]$ mkdir dir1 dir2
-
-Notice that the mkdir command will accept multiple arguments allowing us to create
-both directories with a single command.
+```
+[me@linuxbox ~]$ cd playground
+[me@linuxbox playground]$ mkdir dir1 dir2
+```
 
 注意到 mkdir 命令可以接受多个参数，它允许我们用一个命令来创建这两个目录。
 
-###　复制文件
+####5.7.2　复制文件
 
-Next, let's get some data into our playground. We'll do this by copying a file. Using the
-cp command, we'll copy the passwd file from the /etc directory to the current
-working directory:
+下一步，让我们得到一些数据到我们的游戏场中。通过复制一个文件来实现目的。使用 cp 命令，我们从 /etc 目录复制 passwd 文件到当前工作目录下：
 
-下一步，让我们得到一些数据到我们的游戏场中。通过复制一个文件来实现目的。
-使用 cp 命令，我们从 /etc 目录复制 passwd 文件到当前工作目录下：
+```
+[me@linuxbox playground]$ cp /etc/passwd .
+```
 
-    [me@linuxbox playground]$ cp /etc/passwd .
+注意：我们怎样使用当前工作目录的快捷方式，命令末尾的单个圆点。如果我们执行 ls 命令，可以看到我们的文件：
 
-Notice how we used the shorthand for the current working directory, the single trailing
-period. So now if we perform an ls, we will see our file:
-
-注意：我们怎样使用当前工作目录的快捷方式，命令末尾的单个圆点。如果我们执行 ls 命令，
-可以看到我们的文件：
-
-    [me@linuxbox playground]$ ls -l
-    total 12
-    drwxrwxr-x 2  me  me   4096 2008-01-10 16:40 dir1
-    drwxrwxr-x 2  me  me   4096 2008-01-10 16:40 dir2
-    -rw-r--r-- 1  me  me   1650 2008-01-10 16:07 passwd
-
-Now, just for fun, let's repeat the copy using the “-v” option (verbose) to see what it does:
+```
+[me@linuxbox playground]$ ls -l
+total 12
+drwxrwxr-x 2  me  me   4096 2008-01-10 16:40 dir1
+drwxrwxr-x 2  me  me   4096 2008-01-10 16:40 dir2
+-rw-r--r-- 1  me  me   1650 2008-01-10 16:07 passwd
+```
 
 现在，仅仅是为了高兴，重复操作复制命令，使用"-v"选项（详细），看一个它的作用：
 
-    [me@linuxbox playground]$ cp -v /etc/passwd .
-    `/etc/passwd' -> `./passwd'
+```
+[me@linuxbox playground]$ cp -v /etc/passwd .
+`/etc/passwd' -> `./passwd'
+```
 
-The cp command performed the copy again, but this time displayed a concise
-message indicating what operation it was performing. Notice that cp overwrote
-the first copy without any warning. Again this is a case of cp assuming that
-you know what you’re are doing. To get a warning, we'll include
-the “-i” (interactive) option:
+cp 命令再一次执行了复制操作，但是这次显示了一条简洁的信息，指明它进行了什么操作。注意，cp 没有警告，就重写了第一次复制的文件。这是一个案例，cp 假定你知道你的所作所为。为了得到警示信息，在命令中包含"-i"选项：
 
-cp 命令再一次执行了复制操作，但是这次显示了一条简洁的信息，指明它
-进行了什么操作。注意，cp 没有警告，就重写了第一次复制的文件。这是一个案例，
-cp 假定你知道你的所作所为。为了得到警示信息，在命令中包含"-i"选项：
-
-    [me@linuxbox playground]$ cp -i /etc/passwd .
-    cp: overwrite `./passwd'?
-
-Responding to the prompt by entering a “y” will cause the file to be
-overwritten, any other character (for example, “n”)
-will cause cp to leave the file alone.
+```
+[me@linuxbox playground]$ cp -i /etc/passwd .
+cp: overwrite `./passwd'?
+```
 
 响应命令提示信息，输入"y"，文件就会被重写，其它的字符（例如，"n"）会导致 cp 命令不理会文件。
 
-### 移动和重命名文件
-
-Now, the name “passwd” doesn't seem very playful and this is a playground,
-so let's change it to something else:
+####5.7.3 移动和重命名文件
 
 现在，"passwd" 这个名字，看起来不怎么有趣，这是个游戏场，所以我们给它改个名字：
 
-    [me@linuxbox playground]$ mv passwd fun
+```
+[me@linuxbox playground]$ mv passwd fun
+```
 
-Let's pass the fun around a little by moving our renamed file to each of the directories and back again:
+让我们来传送 fun 文件，通过移动重命名的文件到各个子目录，然后再把它移回到当前目录：
 
-让我们来传送 fun 文件，通过移动重命名的文件到各个子目录，
-然后再把它移回到当前目录：
-
-    [me@linuxbox playground]$ mv fun dir1
-
-to move it first to directory dir1, then:
+```
+[me@linuxbox playground]$ mv fun dir1
+```
 
 首先，把 fun 文件移动目录 dir1 中，然后：
 
-    [me@linuxbox playground]$ mv dir1/fun dir2
-
-to move it from dir1 to dir2, then:
+```
+[me@linuxbox playground]$ mv dir1/fun dir2
+```
 
 再把 fun 文件从 dir1 移到目录 dir2, 然后：
 
-    [me@linuxbox playground]$ mv dir2/fun .
+```
+[me@linuxbox playground]$ mv dir2/fun .
+```
 
-to finally bringing it back to the current working directory.
-Next, let's see the effect of mv on directories.
-First we will move our data file into dir1 again:
+最后，再把 fun 文件带回到当前工作目录。下一步，来看看移动目录的效果。首先，我们先移动我们的数据文件到 dir1 目录：
 
-最后，再把 fun 文件带回到当前工作目录。下一步，来看看移动目录的效果。
-首先，我们先移动我们的数据文件到 dir1 目录：
-
-    [me@linuxbox playground]$ mv fun dir1
-
-then move dir1 into dir2 and confirm it with ls:
+```
+[me@linuxbox playground]$ mv fun dir1
+```
 
 然后移动 dir1到 dir2目录，用 ls 来确认执行结果:
 
-    [me@linuxbox playground]$ mv dir1 dir2
-    [me@linuxbox playground]$ ls -l dir2
-    total 4
-    drwxrwxr-x 2 me me 4096 2008-01-11 06:06 dir1
-    [me@linuxbox playground]$ ls -l dir2/dir1
-    total 4
-    -rw-r--r-- 1 me me 1650 2008-01-10 16:33 fun
-
-Note that since dir2 already existed, mv moved dir1 into dir2. If dir2 had not
-existed, mv would have renamed dir1 to dir2. Lastly, let's put everything back:
+```
+[me@linuxbox playground]$ mv dir1 dir2
+[me@linuxbox playground]$ ls -l dir2
+total 4
+drwxrwxr-x 2 me me 4096 2008-01-11 06:06 dir1
+[me@linuxbox playground]$ ls -l dir2/dir1
+total 4
+-rw-r--r-- 1 me me 1650 2008-01-10 16:33 fun
+```
 
 注意：因为目录 dir2 已经存在，mv 命令移动 dir1 到 dir2 目录。如果 dir2 不存在，
 mv 会重新命名 dir1 为 dir2。最后，把所有的东西放回原处。
 
-    [me@linuxbox playground]$ mv dir2/dir1 .
-    [me@linuxbox playground]$ mv dir1/fun .
+```
+[me@linuxbox playground]$ mv dir2/dir1 .
+[me@linuxbox playground]$ mv dir1/fun .
+```
 
-### 创建硬链接
+####5.7.4 创建硬链接
 
-Now we'll try some links. First the hard links. We’ll create some links to our data file
-like so:
+现在，我们试着创建链接。首先是硬链接。我们创建一些关联我们数据文件的链接：
 
-现在，我们试着创建链接。首先是硬链接。我们创建一些关联我们
-数据文件的链接：
-
-    [me@linuxbox playground]$ ln fun fun-hard
-    [me@linuxbox playground]$ ln fun dir1/fun-hard
-    [me@linuxbox playground]$ ln fun dir2/fun-hard
-
-So now we have four instances of the file “fun”. Let's take a look our playground
-directory:
+```
+[me@linuxbox playground]$ ln fun fun-hard
+[me@linuxbox playground]$ ln fun dir1/fun-hard
+[me@linuxbox playground]$ ln fun dir2/fun-hard
+```
 
 所以现在，我们有四个文件"fun"的实例。看一下目录 playground 中的内容：
 
-    [me@linuxbox playground]$ ls -l
-    total 16
-    drwxrwxr-x 2 me  me 4096 2008-01-14 16:17 dir1
-    drwxrwxr-x 2 me  me 4096 2008-01-14 16:17 dir2
-    -rw-r--r-- 4 me  me 1650 2008-01-10 16:33 fun
-    -rw-r--r-- 4 me  me 1650 2008-01-10 16:33 fun-hard
+```
+[me@linuxbox playground]$ ls -l
+total 16
+drwxrwxr-x 2 me  me 4096 2008-01-14 16:17 dir1
+drwxrwxr-x 2 me  me 4096 2008-01-14 16:17 dir2
+-rw-r--r-- 4 me  me 1650 2008-01-10 16:33 fun
+-rw-r--r-- 4 me  me 1650 2008-01-10 16:33 fun-hard
+```
 
-One thing you notice is that the second field in the listing
-for fun and fun-hard both contain a “4” which is the number of
-hard links that now exist for the file. You'll remember that a file will
-always have at least one because the file's name is created by a link. So, how
-do we know that fun and fun-hard are, in fact, the same file? In this case,
-ls is not very helpful. While we can see that fun and fun-hard are both the
-same size (field 5), our listing provides no way to be sure. To solve this
-problem, we're going to have to dig a little deeper.
+注意到一件事，列表中，文件 fun 和 fun-hard 的第二个字段是"4"，这个数字是文件"fun"的硬链接数目。你要记得一个文件至少有一个硬链接，因为文件名就是由链接创建的。所以，我们怎样知道实际上 fun 和 fun-hard 是一样的文件呢？在这个例子里，ls 不是很有用。虽然我们能够看到 fun 和 fun-hard 文件大小一样（第五字段），但我们的列表没有提供可靠的信息来确定（这两个文件一样）。为了解决这个问题，我们更深入的研究一下。
 
-注意到一件事，列表中，文件 fun 和 fun-hard 的第二个字段是"4"，这个数字
-是文件"fun"的硬链接数目。你要记得一个文件至少有一个硬链接，因为文件
-名就是由链接创建的。所以，我们怎样知道实际上 fun 和 fun-hard 是一样的文件呢？
-在这个例子里，ls 不是很有用。虽然我们能够看到 fun 和 fun-hard 文件大小一样
-（第五字段），但我们的列表没有提供可靠的信息来确定（这两个文件一样）。
-为了解决这个问题，我们更深入的研究一下。
-
-When thinking about hard links, it is helpful to imagine that files are made
-up of two parts: the data part containing the file's contents and the name
-part which holds the file's name. When we create hard links, we are actually
-creating additional name parts that all refer to the same data part. The
-system assigns a chain of disk blocks to what is called an inode, which is
-then associated with the name part. Each hard link therefore refers to a
-specific inode containing the file's contents.
-
-当考虑到硬链接的时候，我们可以假设文件由两部分组成：包含文件内容的数据部分和持有文件名的名字部分
-，这将有助于我们理解这个概念。当我们创建文件硬链接的时候，实际上是为文件创建了额外的名字部分，
-并且这些名字都关系到相同的数据部分。这时系统会分配一连串的磁盘块给所谓的索引节点，然后索引节点与文
-件名字部分相关联。因此每一个硬链接都关系到一个具体的包含文件内容的索引节点。
-
-The ls command has a way to reveal this information. It is invoked with the “-i” option:
+当考虑到硬链接的时候，我们可以假设文件由两部分组成：包含文件内容的数据部分和持有文件名的名字部分，这将有助于我们理解这个概念。当我们创建文件硬链接的时候，实际上是为文件创建了额外的名字部分，并且这些名字都关系到相同的数据部分。这时系统会分配一连串的磁盘块给所谓的索引节点，然后索引节点与文件名字部分相关联。因此每一个硬链接都关系到一个具体的包含文件内容的索引节点。
 
 ls 命令有一种方法，来展示（文件索引节点）的信息。在命令中加上"-i"选项：
 
-    [me@linuxbox playground]$ ls -li
-    total 16
-    12353539 drwxrwxr-x 2 me  me 4096  2008-01-14  16:17  dir1
-    12353540 drwxrwxr-x 2 me  me 4096  2008-01-14  16:17  dir2
-    12353538 -rw-r--r-- 4 me  me 1650  2008-01-10  16:33  fun
-    12353538 -rw-r--r-- 4 me  me 1650  2008-01-10  16:33  fun-hard
+```
+[me@linuxbox playground]$ ls -li
+total 16
+12353539 drwxrwxr-x 2 me  me 4096  2008-01-14  16:17  dir1
+12353540 drwxrwxr-x 2 me  me 4096  2008-01-14  16:17  dir2
+12353538 -rw-r--r-- 4 me  me 1650  2008-01-10  16:33  fun
+12353538 -rw-r--r-- 4 me  me 1650  2008-01-10  16:33  fun-hard
+```
 
-In this version of the listing, the first field is the inode number and, as we
-can see, both fun and fun-hard share the same inode number, which confirms
-they are the same file.
+在这个版本的列表中，第一字段表示文件索引节点号，正如我们所见到的，fun 和 fun-hard 共享一样的索引节点号，这就证实这两个文件是一样的文件。
 
-在这个版本的列表中，第一字段表示文件索引节点号，正如我们所见到的，
-fun 和 fun-hard 共享一样的索引节点号，这就证实这两个文件是一样的文件。
+####5.7.5 创建符号链接
 
-### 创建符号链接
-
-Symbolic links were created to overcome the two disadvantages of hard links: hard links
-cannot span physical devices and hard links cannot reference directories, only files.
-Symbolic links are a special type of file that contains a text pointer to the target file or
-directory.
-
-建立符号链接的目的是为了克服硬链接的两个缺点：硬链接不能跨越物理设备，
-硬链接不能关联目录，只能是文件。符号链接是文件的特殊类型，它包含一个指向
-目标文件或目录的文本指针。
-
-Creating symbolic links is similar to creating hard links:
+建立符号链接的目的是为了克服硬链接的两个缺点：硬链接不能跨越物理设备，硬链接不能关联目录，只能是文件。符号链接是文件的特殊类型，它包含一个指向目标文件或目录的文本指针。
 
 符号链接的建立过程相似于创建硬链接：
 
-    [me@linuxbox playground]$ ln -s fun fun-sym
-    [me@linuxbox playground]$ ln -s ../fun dir1/fun-sym
-    [me@linuxbox playground]$ ln -s ../fun dir2/fun-sym
+```
+[me@linuxbox playground]$ ln -s fun fun-sym
+[me@linuxbox playground]$ ln -s ../fun dir1/fun-sym
+[me@linuxbox playground]$ ln -s ../fun dir2/fun-sym
+```
 
-The first example is pretty straightforward, we simply add the “-s” option to create a
-symbolic link rather than a hard link. But what about the next two? Remember, when we
-create a symbolic link, we are creating a text description of where the target file is
-relative to the symbolic link. It's easier to see if we look at the ls output:
+第一个实例相当直接，在 ln 命令中，简单地加上"-s"选项就可以创建一个符号链接，而不是一个硬链接。下面两个例子又是怎样呢？ 记住，当我们创建一个符号链接的时候，会建立一个目标文件在哪里和符号链接有关联的文本描述。如果我们看看 ls 命令的输出结果，比较容易理解。
 
-第一个实例相当直接，在 ln 命令中，简单地加上"-s"选项就可以创建一个符号链接，
-而不是一个硬链接。下面两个例子又是怎样呢？ 记住，当我们创建一个符号链接
-的时候，会建立一个目标文件在哪里和符号链接有关联的文本描述。如果我们看看
-ls 命令的输出结果，比较容易理解。
+```
+[me@linuxbox playground]$ ls -l dir1
+total 4
+-rw-r--r-- 4 me  me 1650 2008-01-10 16:33 fun-hard
+lrwxrwxrwx 1 me  me    6 2008-01-15 15:17 fun-sym -> ../fun
+```
 
-    [me@linuxbox playground]$ ls -l dir1
-    total 4
-    -rw-r--r-- 4 me  me 1650 2008-01-10 16:33 fun-hard
-    lrwxrwxrwx 1 me  me    6 2008-01-15 15:17 fun-sym -> ../fun
-
-The listing for fun-sym in dir1 shows that is it a symbolic link by the leading “l” in
-the first field and that it points to “../fun”, which is correct. Relative to the location of
-fun-sym, fun is in the directory above it. Notice too, that the length of the symbolic
-link file is 6, the number of characters in the string “../fun” rather than the length of the
-file to which it is pointing.
-
-目录 dir1 中，fun-sym 的列表说明了它是一个符号链接，通过在第一字段中的首字符"l"
-可知，并且它还指向"../fun"，也是正确的。相对于 fun-sym 的存储位置，fun 在它的
-上一个目录。同时注意，符号链接文件的长度是6，这是字符串"../fun"所包含的字符数，
-而不是符号链接所指向的文件长度。
-
-When creating symbolic links, you can either use absolute pathnames:
+目录 dir1 中，fun-sym 的列表说明了它是一个符号链接，通过在第一字段中的首字符"l"可知，并且它还指向"../fun"，也是正确的。相对于 fun-sym 的存储位置，fun 在它的上一个目录。同时注意，符号链接文件的长度是6，这是字符串"../fun"所包含的字符数，而不是符号链接所指向的文件长度。
 
 当建立符号链接时，你既可以使用绝对路径名：
 
-    ln -s /home/me/playground/fun dir1/fun-sym
+```
+ln -s /home/me/playground/fun dir1/fun-sym
+```
 
-or relative pathnames, as we did in our earlier example. Using relative pathnames is
-more desirable because it allows a directory containing symbolic links to be renamed
-and/or moved without breaking the links.
-
-也可用相对路径名，正如前面例题所展示的。使用相对路径名更令人满意，
-因为它允许一个包含符号链接的目录重命名或移动，而不会破坏链接。
-
-In addition to regular files, symbolic links can also reference directories:
+也可用相对路径名，正如前面例题所展示的。使用相对路径名更令人满意，因为它允许一个包含符号链接的目录重命名或移动，而不会破坏链接。
 
 除了普通文件，符号链接也能关联目录：
 
-    [me@linuxbox playground]$ ln -s dir1 dir1-sym
-    [me@linuxbox playground]$ ls -l
-    total 16
-    ...省略
+```
+[me@linuxbox playground]$ ln -s dir1 dir1-sym
+[me@linuxbox playground]$ ls -l
+total 16
+...省略
+```
 
-### 移动文件和目录
+####5.7.6 移动文件和目录
 
-As we covered earlier, the rm command is used to delete files and directories. We are
-going to use it to clean up our playground a little bit. First, let's delete one of our hard
-links:
+正如我们之前讨论的，rm 命令被用来删除文件和目录。我们将要使用它来清理一下我们的游戏场。首先，删除一个硬链接：
 
-正如我们之前讨论的，rm 命令被用来删除文件和目录。我们将要使用它
-来清理一下我们的游戏场。首先，删除一个硬链接：
+```
+[me@linuxbox playground]$ rm fun-hard
+[me@linuxbox playground]$ ls -l
+total 12
+...省略
+```
 
-    [me@linuxbox playground]$ rm fun-hard
-    [me@linuxbox playground]$ ls -l
-    total 12
-    ...省略
+结果不出所料。文件 fun-hard 消失了，文件 fun 的链接数从4减到3，正如目录列表第二字段所示。下一步，我们会删除文件 fun，仅为了娱乐，我们会包含"-i"选项，看一个它的作用：
 
-That worked as expected. The file fun-hard is gone and the link count shown for fun
-is reduced from four to three, as indicated in the second field of the directory listing.
-Next, we'll delete the file fun, and just for enjoyment, we'll include the “-i” option to
-show what that does:
+```
+[me@linuxbox playground]$ rm -i fun
+rm: remove regular file `fun'?
+```
 
-结果不出所料。文件 fun-hard 消失了，文件 fun 的链接数从4减到3，正如
-目录列表第二字段所示。下一步，我们会删除文件 fun，仅为了娱乐，我们会包含"-i"
-选项，看一个它的作用：
+在提示符下输入"y"，删除文件。让我们看一下 ls 的输出结果。注意，fun-sym 发生了什么事? 因为它是一个符号链接，指向已经不存在的文件，链接已经坏了：
 
-    [me@linuxbox playground]$ rm -i fun
-    rm: remove regular file `fun'?
+```
+[me@linuxbox playground]$ ls -l
+total 8
+drwxrwxr-x 2 me  me     4096 2008-01-15 15:17 dir1
+lrwxrwxrwx 1 me  me        4 2008-01-16 14:45 dir1-sym -> dir1
+drwxrwxr-x 2 me  me     4096 2008-01-15 15:17 dir2
+lrwxrwxrwx 1 me  me        3 2008-01-15 15:15 fun-sym -> fun
+```
 
-Enter “y” at the prompt and the file is deleted. But let's look at the output of ls now.
-Noticed what happened to fun-sym? Since it's a symbolic link pointing to a now-
-nonexistent file, the link is broken:
+大多数 Linux 的发行版本配置 ls 显示损坏的链接。在 Fedora 系统中，坏的链接以闪烁的红色文本显示！损坏链接的出现，并不危险，但是相当混乱。如果我们试着使用损坏的链接，会看到以下情况：
 
-在提示符下输入"y"，删除文件。让我们看一下 ls 的输出结果。注意，fun-sym 发生了
-什么事? 因为它是一个符号链接，指向已经不存在的文件，链接已经坏了：
-
-    [me@linuxbox playground]$ ls -l
-    total 8
-    drwxrwxr-x 2 me  me     4096 2008-01-15 15:17 dir1
-    lrwxrwxrwx 1 me  me        4 2008-01-16 14:45 dir1-sym -> dir1
-    drwxrwxr-x 2 me  me     4096 2008-01-15 15:17 dir2
-    lrwxrwxrwx 1 me  me        3 2008-01-15 15:15 fun-sym -> fun
-
-Most Linux distributions configure ls to display broken links. On a Fedora box, broken
-links are displayed in blinking red text! The presence of a broken link is not, in and of
-itself dangerous but it is rather messy. If we try to use a broken link we will see this:
-
-大多数 Linux 的发行版本配置 ls 显示损坏的链接。在 Fedora 系统中，坏的链接以闪烁的
-红色文本显示！损坏链接的出现，并不危险，但是相当混乱。如果我们试着使用
-损坏的链接，会看到以下情况：
-
-    [me@linuxbox playground]$ less fun-sym
-    fun-sym: No such file or directory
-
-Let's clean up a little. We'll delete the symbolic links:
+```
+[me@linuxbox playground]$ less fun-sym
+fun-sym: No such file or directory
+```
 
 稍微清理一下现场。删除符号链接：
 
-    [me@linuxbox playground]$ rm fun-sym dir1-sym
-    [me@linuxbox playground]$ ls -l
-    total 8
-    drwxrwxr-x 2 me  me    4096 2008-01-15 15:17 dir1
-    drwxrwxr-x 2 me  me    4096 2008-01-15 15:17 dir2
+```
+[me@linuxbox playground]$ rm fun-sym dir1-sym
+[me@linuxbox playground]$ ls -l
+total 8
+drwxrwxr-x 2 me  me    4096 2008-01-15 15:17 dir1
+drwxrwxr-x 2 me  me    4096 2008-01-15 15:17 dir2
+```
 
-One thing to remember about symbolic links is that most file operations are carried out
-on the link's target, not the link itself. rm is an exception. When you delete a link, it is
-the link that is deleted, not the target.
+对于符号链接，有一点值得记住，执行的大多数文件操作是针对链接的对象，而不是链接本身。而 rm 命令是个特例。当你删除链接的时候，删除链接本身，而不是链接的对象。
 
-对于符号链接，有一点值得记住，执行的大多数文件操作是针对链接的对象，而不是链接本身。
-而 rm 命令是个特例。当你删除链接的时候，删除链接本身，而不是链接的对象。
+最后，我们将删除我们的游戏场。为了完成这个工作，我们将返回到我们的家目录，然后用 rm 命令加上选项(-r)，来删除目录 playground，和目录下的所有内容，包括子目录：
 
-Finally, we will remove our playground. To do this, we will return to our home directory
-and use rm with the recursive option (-r) to delete playground and all of its contents,
-including its subdirectories:
+```
+[me@linuxbox playground]$ cd
+[me@linuxbox ~]$ rm -r playground
+```
 
-最后，我们将删除我们的游戏场。为了完成这个工作，我们将返回到
-我们的家目录，然后用 rm 命令加上选项(-r)，来删除目录 playground，
-和目录下的所有内容，包括子目录：
-
-    [me@linuxbox playground]$ cd
-    [me@linuxbox ~]$ rm -r playground
-
-
-> Creating Symlinks With The GUI
+> ####用 GUI 来创建符号链接
 >
-> 用 GUI 来创建符号链接
->
-> The file managers in both GNOME and KDE provide an easy and automatic
-method of creating symbolic links. With GNOME, holding the Ctrl+Shift keys
-while dragging a file will create a link rather than copying (or moving) the file.
-In KDE, a small menu appears whenever a file is dropped, offering a choice of
-copying, moving, or linking the file.
->
-> 文件管理器 GNOME 和 KDE 都提供了一个简单而且自动化的方法来创建符号链接。
-在 GNOME 里面，当拖动文件时，同时按下 Ctrl+Shift 按键会创建一个链接，而不是
-复制（或移动）文件。在 KDE 中，无论什么时候放下一个文件，会弹出一个小菜单，
-这个菜单会提供复制，移动，或创建链接文件选项。
+> 文件管理器 GNOME 和 KDE 都提供了一个简单而且自动化的方法来创建符号链接。在 GNOME 里面，当拖动文件时，同时按下 Ctrl+Shift 按键会创建一个链接，而不是复制（或移动）文件。在 KDE 中，无论什么时候放下一个文件，会弹出一个小菜单，这个菜单会提供复制，移动，或创建链接文件选项。
 
-### 总结
+###5.8 本章总结
 
-We've covered a lot of ground here and it will take a while to fully sink in. Perform the
-playground exercise over and over until it makes sense. It is important to get a good
-understanding of basic file manipulation commands and wildcards. Feel free to expand
-on the playground exercise by adding more files and directories, using wildcards to
-specify files for various operations. The concept of links is a little confusing at first, but
-take the time to learn how they work. They can be a real lifesaver.
-
-在这一章中，我们已经研究了许多基础知识。我们得花费一些时间来全面地理解。
-反复练习 playground 例题，直到你觉得它有意义。能够良好地理解基本文件操作
-命令和通配符，非常重要。随意通过添加文件和目录来拓展 playground 练习，
-使用通配符来为各种各样的操作命令指定文件。关于链接的概念，在刚开始接触
-时会觉得有点迷惑，花些时间来学习它们是怎样工作的。它们能成为真正的救星。
+在这一章中，我们已经研究了许多基础知识。我们得花费一些时间来全面地理解。反复练习 playground 例题，直到你觉得它有意义。能够良好地理解基本文件操作命令和通配符，非常重要。随意通过添加文件和目录来拓展 playground 练习，使用通配符来为各种各样的操作命令指定文件。关于链接的概念，在刚开始接触时会觉得有点迷惑，花些时间来学习它们是怎样工作的。它们能成为真正的救星。
 
