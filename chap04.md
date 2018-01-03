@@ -73,323 +73,121 @@ command -options arguments
 [me@linuxbox ~]$ ls -lt --reverse
 ```
 
-ls 命令有大量的选项。表4-1列出了最常使用的选项。
+ls 命令有大量的选项。下表列出了ls命令最常用的选项。
+
+|选项|长选项|描述|
+|-----|-----|-----|
+|-a|--all|列出所有文件，甚至包括文件名以圆点开头的默认会被隐藏的隐藏文件。|
+|-d|--directory|通常，如果指定了目录名，ls 命令会列出这个目录中的内容，而不是目录本身。把这个选项与 -l 选项结合使用，可以看到所指定目录的详细信息，而不是目录中的内容。|
+|-F|--classify|这个选项会在每个所列出的名字后面加上一个指示符。例如，如果名字是目录名，则会加上一个'/'字符。|
+|-h|--human-readable|当以长格式列出时，以人们可读的格式，而不是以字节数来显示文件的大小。|
+|-l||以长格式显示结果。|
+|-r|--reverse|以相反的顺序来显示结果。通常，ls 命令的输出结果按照字母升序排列。|
+|-S||命令输出结果按照文件大小来排序。|
+|-t||按照修改时间来排序。|
+<br />
+
+####4.1.2 深入研究长格式输出
 
 
+正如我们先前知道的，“-l”选项导致 ls 的输出结果以长格式输出。这种格式包含大量的有用信息。下面的例子目录来自于 Ubuntu 系统：
 
-<table class="multi">
-<caption class="cap">表 4-1: ls 命令选项 </caption>
-<tr>
-<th class="title" width="10%">选项</th>
-<th width="20%">长选项</th>
-<th>描述</th>
-</tr>
-<tr>
-<td valign="top">-a</td>
-<td>--all</td>
-<td>列出所有文件，甚至包括文件名以圆点开头的默认会被隐藏的隐藏文件。</td>
-</tr>
-<tr>
-<td valign="top">-d</td>
-<td>--directory</td>
-<td>通常，如果指定了目录名，ls 命令会列出这个目录中的内容，而不是目录本身。
-把这个选项与 -l 选项结合使用，可以看到所指定目录的详细信息，而不是目录中的内容。</td>
-</tr>
-<tr>
-<td >-F</td>
-<td >--classify</td>
-<td >这个选项会在每个所列出的名字后面加上一个指示符。例如，如果名字是
-目录名，则会加上一个'/'字符。 </td>
-</tr>
-<tr>
-<td >-h</td>
-<td >--human-readable</td>
-<td >当以长格式列出时，以人们可读的格式，而不是以字节数来显示文件的大小。</td>
-</tr>
-<tr>
-<td >-l</td>
-<td > </td>
-<td >以长格式显示结果。 </td>
-</tr>
-<tr>
-<td>-r</td>
-<td>--reverse</td>
-<td>以相反的顺序来显示结果。通常，ls 命令的输出结果按照字母升序排列。</td>
-</tr>
-<tr>
-<td>-S</td>
-<td> </td>
-<td>命令输出结果按照文件大小来排序。 </td>
-</tr>
-<tr>
-<td>-t</td>
-<td> </td>
-<td>按照修改时间来排序。</td>
-</tr>
-</table>
-
-### 深入研究长格式输出
-
-
-正如我们先前知道的，“-l”选项导致 ls 的输出结果以长格式输出。这种格式包含大量的有用信息。下面的例子目录来自
-于 Ubuntu 系统：
-
-    -rw-r--r-- 1 root root 3576296 2007-04-03 11:05 Experience ubuntu.ogg
-    -rw-r--r-- 1 root root 1186219 2007-04-03 11:05 kubuntu-leaflet.png
-    -rw-r--r-- 1 root root   47584 2007-04-03 11:05 logo-Edubuntu.png
-    -rw-r--r-- 1 root root   44355 2007-04-03 11:05 logo-Kubuntu.png
-    -rw-r--r-- 1 root root   34391 2007-04-03 11:05 logo-Ubuntu.png
-    -rw-r--r-- 1 root root   32059 2007-04-03 11:05 oo-cd-cover.odf
-    -rw-r--r-- 1 root root  159744 2007-04-03 11:05 oo-derivatives.doc
-    -rw-r--r-- 1 root root   27837 2007-04-03 11:05 oo-maxwell.odt
-    -rw-r--r-- 1 root root   98816 2007-04-03 11:05 oo-trig.xls
-    -rw-r--r-- 1 root root  453764 2007-04-03 11:05 oo-welcome.odt
-    -rw-r--r-- 1 root root  358374 2007-04-03 11:05 ubuntu Sax.ogg
-
-
+```
+-rw-r--r-- 1 root root 3576296 2007-04-03 11:05 Experience ubuntu.ogg
+-rw-r--r-- 1 root root 1186219 2007-04-03 11:05 kubuntu-leaflet.png
+-rw-r--r-- 1 root root   47584 2007-04-03 11:05 logo-Edubuntu.png
+-rw-r--r-- 1 root root   44355 2007-04-03 11:05 logo-Kubuntu.png
+-rw-r--r-- 1 root root   34391 2007-04-03 11:05 logo-Ubuntu.png
+-rw-r--r-- 1 root root   32059 2007-04-03 11:05 oo-cd-cover.odf
+-rw-r--r-- 1 root root  159744 2007-04-03 11:05 oo-derivatives.doc
+-rw-r--r-- 1 root root   27837 2007-04-03 11:05 oo-maxwell.odt
+-rw-r--r-- 1 root root   98816 2007-04-03 11:05 oo-trig.xls
+-rw-r--r-- 1 root root  453764 2007-04-03 11:05 oo-welcome.odt
+```
 
 选一个文件，来看一下各个输出字段的含义：
 
-<table class="multi">
-<caption class="cap">Table 4-2: ls Long Listing Fields</caption>
-<tr>
-<th class="title">Field</th>
-<th class="title">Meaning</th>
-</tr>
-<tr>
-<td valign="top" width="20%">-rw-r--r--</td>
-<td valign="top">Access rights to the file. The first character indicates the
-type of file. Among the different types, a leading dash means a regular file,
-while a “d” indicates a directory.  The next three characters are the access
-rights for the file's owner, the next three are for members of the file's
-group, and the final three are for everyone else. The full meaning of this
-is discussed in Chapter 10 – Permissions.  </td>
-</tr>
-<tr>
-<td valign="top">1</td>
-<td valign="top">File's number of hard links. See the discussion of links
-later in this chapter.  </td>
-</tr>
-<tr>
-<td valign="top">root</td>
-<td valign="top">The user name of the file's owner.  </td>
-</tr>
-<tr>
-<td valign="top">root</td>
-<td valign="top">The name of the group which owns the file.  </td>
-</tr>
-<tr>
-<td valign="top">32059</td>
-<td valign="top">Size of the file in bytes.  </td>
-</tr>
-<tr>
-<td valign="top">2007-04-03 11:05 </td>
-<td valign="top">Date and time of the file's last modification.  </td>
-</tr>
-<tr>
-<td valign="top">oo-cd-cover.odf </td>
-<td valign="top">Name of the file.  </td>
-</tr>
-</table>
+|字段|含义|
+|-----|-----|
+|-rw-r--r--|对于文件的访问权限。第一个字符指明文件类型。在不同类型之间，开头的“－”说明是一个普通文件，“d”表明是一个目录。其后三个字符是文件所有者的访问权限，再其后的三个字符是文件所属组中成员的访问权限，最后三个字符是其他所有人的访问权限。这个字段的完整含义将在第十章讨论。|
+|1|文件的硬链接数目。参考随后讨论的关于链接的内容。|
+|root|文件属主的用户名。|
+|root|文件所属用户组的名字。|
+|32059|以字节数表示的文件大小。|
+|2007-04-03 11:05 |上次修改文件的时间和日期。|
+|oo-cd-cover.odf|文件名。|
+<br />
 
-<table class="multi">
-<caption class="cap">表 4-2: ls 长格式列表的字段</caption>
-<tr>
-<th class="title">字段</th>
-<th class="title">含义</th>
-</tr>
-<tr>
-<td valign="top" width="20%">-rw-r--r--</td>
-<td valign="top">对于文件的访问权限。第一个字符指明文件类型。在不同类型之间，
-开头的“－”说明是一个普通文件，“d”表明是一个目录。其后三个字符是文件所有者的
-访问权限，再其后的三个字符是文件所属组中成员的访问权限，最后三个字符是其他所
-有人的访问权限。这个字段的完整含义将在第十章讨论。 </td>
-</tr>
-<tr>
-<td>1</td>
-<td>文件的硬链接数目。参考随后讨论的关于链接的内容。 </td>
-</tr>
-<tr>
-<td>root</td>
-<td>文件属主的用户名。</td>
-</tr>
-<tr>
-<td>root</td>
-<td>文件所属用户组的名字。</td>
-</tr>
-<tr>
-<td>32059</td>
-<td>以字节数表示的文件大小。</td>
-</tr>
-<tr>
-<td>2007-04-03 11:05 </td>
-<td>上次修改文件的时间和日期。</td>
-</tr>
-<tr>
-<td>oo-cd-cover.odf </td>
-<td>文件名。</td>
-</tr>
-</table>
-
-### 确定文件类型
+###4.2 确定文件类型
 
 
-随着探究操作系统的进行，知道文件包含的内容是很有用的。我们将用 file 命令来确定文件的类型。我们之前讨论过，
-在 Linux 系统中，并不要求文件名来反映文件的内容。然而，一个类似 “picture.jpg” 的文件名，我们会期望它包含
-JPEG 压缩图像，但 Linux 却不这样要求它。可以这样调用 file 命令：
+随着探究操作系统的进行，知道文件包含的内容是很有用的。我们将用 file 命令来确定文件的类型。我们之前讨论过，在 Linux 系统中，并不要求文件名来反映文件的内容。然而，一个类似 “picture.jpg” 的文件名，我们会期望它包含 JPEG 压缩图像，但 Linux 却不这样要求它。可以这样调用 file 命令：
 
-    file filename
+```
+file filename
+```
 
 当调用 file 命令后，file 命令会打印出文件内容的简单描述。例如：
 
-    [me@linuxbox ~]$ file picture.jpg
-    picture.jpg: JPEG image data, JFIF standard 1.01
+```
+[me@linuxbox ~]$ file picture.jpg
+picture.jpg: JPEG image data, JFIF standard 1.01
+```
 
 
-有许多种类型的文件。事实上，在类 Unix 操作系统中比如说 Linux 中，有个普遍的观念就是“一切皆文件”。
-随着课程的进行，我们将会明白这句话是多么的正确。
-
+有许多种类型的文件。事实上，在类 Unix 操作系统中比如说 Linux 中，有个普遍的观念就是“一切皆文件”。随着课程的进行，我们将会明白这句话是多么的正确。
 
 虽然系统中许多文件格式是熟悉的，例如 MP3和 JPEG 文件，但也有一些文件格式比较含蓄，极少数文件相当陌生。
 
-### 用 less 浏览文件内容
+###4.3 用 less 浏览文件内容
 
+less 命令是一个用来浏览文本文件的程序。纵观 Linux 系统，有许多人类可读的文本文件。less 程序为我们检查文本文件提供了方便。
+<br />
 
-less 命令是一个用来浏览文本文件的程序。纵观 Linux 系统，有许多人类可读的文本文件。less 程序为我们检查文本文件 提供了方便。
-
-
-
-> 什么是“文本”
+> #### 什么是“文本”
 >
-> 在计算机中，有许多方法可以表达信息。所有的方法都涉及到，在信息与一些数字之间确立一种关系，而这些数字可以
-用来代表信息。毕竟，计算机只能理解数字，这样所有的数据都被转换成数值来表示。
+> 在计算机中，有许多方法可以表达信息。所有的方法都涉及到，在信息与一些数字之间确立一种关系，而这些数字可以用来代表信息。毕竟，计算机只能理解数字，这样所有的数据都被转换成数值来表示。
 >
-> 有些数值表达法非常复杂（例如压缩的视频文件），而其它的就相当简单。最早也是最简单的一种表达法，叫做
-ASCII 文本。ASCII（发音是"As-Key"）是美国信息交换标准码的简称。这是一个简单的编码方法，它首先
-被用在电传打字机上，用来实现键盘字符到数字的映射。
+> 有些数值表达法非常复杂（例如压缩的视频文件），而其它的就相当简单。最早也是最简单的一种表达法，叫做 ASCII 文本。ASCII（发音是"As-Key"）是美国信息交换标准码的简称。这是一个简单的编码方法，它首先被用在电传打字机上，用来实现键盘字符到数字的映射。
 >
-> 文本是简单的字符与数字之间的一对一映射。它非常紧凑。五十个字符的文本翻译成五十个字节的数据。文本只是包含
-简单的字符到数字的映射，理解这点很重要。它和一些文字处理器文档不一样，比如说由微软和
-OpenOffice.org 文档 编辑器创建的文件。这些文件，和简单的 ASCII
-文件形成鲜明对比，它们包含许多非文本元素，来描述它的结构和格式。 纯 ASCII
-文件只包含字符本身，和一些基本的控制符，像制表符、回车符及换行符。纵观 Linux
-系统，许多文件以文本格式存储，也有许多 Linux 工具来处理文本文件。甚至 Windows
-也承认这种文件格式的重要性。著名的 NOTEPAD.EXE 程序就是一个纯 ASCII
-文本文件编辑器。
+> 文本是简单的字符与数字之间的一对一映射。它非常紧凑。五十个字符的文本翻译成五十个字节的数据。文本只是包含简单的字符到数字的映射，理解这点很重要。它和一些文字处理器文档不一样，比如说由微软和 OpenOffice.org 文档 编辑器创建的文件。这些文件，和简单的 ASCII 文件形成鲜明对比，它们包含许多非文本元素，来描述它的结构和格式。 纯 ASCII 文件只包含字符本身，和一些基本的控制符，像制表符、回车符及换行符。
+>
+>纵观 Linux 系统，许多文件以文本格式存储，也有许多 Linux 工具来处理文本文件。甚至 Windows 也承认这种文件格式的重要性。著名的 NOTEPAD.EXE 程序就是一个纯 ASCII 文本文件编辑器。
 
-为什么我们要查看文本文件呢？ 因为许多包含系统设置的文件（叫做配置文件），是以文本格式存储的，阅读它们
-可以更深入的了解系统是如何工作的。另外，许多系统所用到的实际程序（叫做脚本）也是以这种格式存储的。
-在随后的章节里，我们将要学习怎样编辑文本文件以修改系统设置，还要学习编写自己的脚本文件，但现在我们只是看看它们的内容而已。
+<br />
+
+为什么我们要查看文本文件呢？ 因为许多包含系统设置的文件（叫做配置文件），是以文本格式存储的，阅读它们可以更深入的了解系统是如何工作的。另外，许多系统所用到的实际程序（叫做脚本）也是以这种格式存储的。在随后的章节里，我们将要学习怎样编辑文本文件以修改系统设置，还要学习编写自己的脚本文件，但现在我们只是看看它们的内容而已。
 
 less 命令是这样使用的：
 
-    less filename
-
+```
+less filename
+```
 
 一旦运行起来，less 程序允许你前后滚动文件。例如，要查看一个定义了系统中全部用户身份的文件，输入以下命令：
 
-    [me@linuxbox ~]$ less /etc/passwd
+```
+[me@linuxbox ~]$ less /etc/passwd
+```
 
-一旦 less 程序运行起来，我们就能浏览文件内容了。如果文件内容多于一页，那么我们可以上下滚动文件。按下“q”键，
-退出 less 程序。
+一旦 less 程序运行起来，我们就能浏览文件内容了。如果文件内容多于一页，那么我们可以上下滚动文件。按下“q”键，退出 less 程序。
 
 下表列出了 less 程序最常使用的键盘命令。
 
-<table class="multi">
-<caption class="cap">Table 4-3: less Commands</caption>
-<tr>
-<th class="title" width="30%">Command</th>
-<th class="title">Action</th>
-</tr>
-<tr>
-<td valign="top">Page UP or b</td>
-<td valign="top">Scroll back one page</td>
-</tr>
-<tr>
-<td valign="top">Page Down or space</td>
-<td valign="top">Scroll forward one page</td>
-</tr>
-<tr>
-<td valign="top">UP Arrow</td>
-<td valign="top">Scroll Up one line</td>
-</tr>
-<tr>
-<td valign="top">Down Arrow</td>
-<td valign="top">Scrow Down one line</td>
-</tr>
-<tr>
-<td valign="top">G</td>
-<td valign="top">Move to the end of the text file</td>
-</tr>
-<tr>
-<td valign="top">1G or g</td>
-<td valign="top">Move to the beginning of the text file</td>
-</tr>
-<tr>
-<td valign="top">/charaters</td>
-<td valign="top">Search forward for the next occurrence of characters</td>
-</tr>
-<tr>
-<td valign="top">n</td>
-<td valign="top">Search forward for the next occurrence of the previous search</td>
-</tr>
-<tr>
-<td valign="top">h</td>
-<td valign="top">Display help screen</td>
-</tr>
-<tr>
-<td valign="top">q</td>
-<td valign="top">Quit less</td>
-</tr>
-</table>
+|命令|功能|
+|-----|-----|
+|Page UP 或 b|向上翻滚一页|
+|Page Down 或 space|向下翻滚一页|
+|向上箭头键|向上一行|
+|向下箭头键|向下一行|
+|G|移动到最后一行|
+|1G 或 g|跳转到文件第一行|
+|/charaters|向前查找指定的字符串|
+|n|向前查找下一个出现的字符串，这个字符串是之前所指定查找的|
+|h|显示帮助屏幕|
+|q|退出 less 程序|
 
-<table class="multi">
-<caption class="cap">表 4-3: less 命令</caption>
-<tr>
-<th class="title" width="30%">命令</th>
-<th class="title">行为</th>
-</tr>
-<tr>
-<td valign="top">Page UP or b</td>
-<td valign="top">向上翻滚一页</td>
-</tr>
-<tr>
-<td valign="top">Page Down or space</td>
-<td valign="top">向下翻滚一页</td>
-</tr>
-<tr>
-<td valign="top">UP Arrow</td>
-<td valign="top">向上翻滚一行</td>
-</tr>
-<tr>
-<td valign="top">Down Arrow</td>
-<td valign="top">向下翻滚一行</td>
-</tr>
-<tr>
-<td valign="top">G</td>
-<td valign="top">移动到最后一行</td>
-</tr>
-<tr>
-<td valign="top">1G or g</td>
-<td valign="top">移动到开头一行</td>
-</tr>
-<tr>
-<td valign="top">/charaters</td>
-<td valign="top">向前查找指定的字符串</td>
-</tr>
-<tr>
-<td valign="top">n</td>
-<td valign="top">向前查找下一个出现的字符串，这个字符串是之前所指定查找的</td>
-</tr>
-<tr>
-<td valign="top">h</td>
-<td valign="top">显示帮助屏幕</td>
-</tr>
-<tr>
-<td valign="top">q</td>
-<td valign="top">退出 less 程序</td>
-</tr>
-</table>
+
 
 ### less 就是 more（禅语：色即是空）
 
