@@ -100,6 +100,7 @@ Richard Stallman 用了大量的文字来叙述“GNU/Linux”的命名问题，
 
 * [http://www.gnu.org/gnu/why-gnu-linux.html](http://www.gnu.org/gnu/why-gnu-linux.html)
 * [http://www.gnu.org/gnu/gnu-linux-faq.html\#tools](http://www.gnu.org/gnu/gnu-linux-faq.html#tools)
-
+<br />
+<br />
 
 
