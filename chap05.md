@@ -132,366 +132,124 @@ cp item... directory
 |-u, --update|当把文件从一个目录复制到另一个目录时，仅复制目标目录中不存在的文件，或者是文件内容新于目标目录中已经存在的文件。|
 |-v, --verbose|显示翔实的命令操作信息。|
 <br />
+
 cp 命令示例
 
-|||
-|||
-|||
-|||
+|命令|结果|
+|-----|-----|
+|cp file1 file2|复制文件 file1 内容到文件 file2。如果 file2 已经存在，file2 的内容会被 file1 的内容重写。如果 file2 不存在，则会创建 file2。|
+|cp -i file1 file2|这条命令和上面的命令一样，除了如果文件 file2 存在的话，在文件 file2 被重写之前，会提示用户确认信息。|
+|cp file1 file2 dir1|复制文件 file1 和文件 file2 到目录 dir1。目录 dir1 必须存在。|
+|cp dir1/* dir2|使用一个通配符，在目录 dir1 中的所有文件都被复制到目录 dir2 中。dir2 必须已经存在。|
+|cp -r dir1 dir2|复制目录 dir1 中的内容到目录 dir2。如果目录 dir2 不存在，创建目录 dir2，操作完成后，目录 dir2 中的内容和 dir1 中的一样。如果目录 dir2 存在，则目录 dir1 (和目录中的内容)将会被复制到 dir2 中。|
+<br />
 
+###5.4 mv - 移动和重命名文件
 
-<table class="multi">
-<caption class="cap">表5-5: cp 实例</caption>
-<tr>
-<th class="title">命令</th>
-<th class="title">运行结果</th>
-</tr>
-<tr>
-<td valign="top" width="25%">cp file1 file2</td>
-<td valign="top">复制文件 file1 内容到文件 file2。如果 file2 已经存在，
-file2 的内容会被 file1 的内容重写。如果 file2 不存在，则会创建 file2。</td>
-</tr>
-<tr>
-<td valign="top">cp -i file1 file2 </td>
-<td valign="top">这条命令和上面的命令一样，除了如果文件 file2 存在的话，在文件 file2 被重写之前，
-会提示用户确认信息。</td>
-</tr>
-<tr>
-<td valign="top">cp file1 file2 dir1 </td>
-<td valign="top">复制文件 file1 和文件 file2 到目录 dir1。目录 dir1 必须存在。
-</td>
-</tr>
-<tr>
-<td valign="top">cp dir1/* dir2 </td>
-<td valign="top">使用一个通配符，在目录 dir1 中的所有文件都被复制到目录 dir2 中。
-dir2 必须已经存在。</td>
-</tr>
-<tr>
-<td valign="top">cp -r dir1 dir2 </td>
-<td valign="top">复制目录 dir1 中的内容到目录 dir2。如果目录 dir2 不存在，
-创建目录 dir2，操作完成后，目录 dir2 中的内容和 dir1 中的一样。
-如果目录 dir2 存在，则目录 dir1 (和目录中的内容)将会被复制到 dir2 中。</td>
-</tr>
-</table>
+mv 命令可以执行文件移动和文件命名任务，这依赖于你怎样使用它。任何一种情况下，完成操作之后，原来的文件名不再存在。mv 使用方法与 cp 很相像：
 
-### mv - 移动和重命名文件
+```
+mv item1 item2
+```
 
-The mv command performs both file moving and file renaming, depending on how it is used.
-In either case, the original filename no longer exists after the operation.
-mv is used in much the same way as cp:
-
-mv 命令可以执行文件移动和文件命名任务，这依赖于你怎样使用它。任何一种
-情况下，完成操作之后，原来的文件名不再存在。mv 使用方法与 cp 很相像：
-
-    mv item1 item2
-
-to move or rename file or directory “item1” to “item2” or:
 
 把文件或目录 “item1” 移动或重命名为 “item2”, 或者：
 
-    mv item... directory
-
-to move one or more items from one directory to another.
+```
+mv item... directory
+```
 
 把一个或多个条目从一个目录移动到另一个目录中。
 
-### 有用的选项和实例
+mv 与 cp 共享了很多一样的选项,见下表：
 
-mv shares many of the same options as cp:
+|选项|含义|
+|-----|-----|
+|-i, --interactive|在重写一个已经存在的文件之前，提示用户确认信息。如果不指定这个选项，mv 命令会默认重写文件内容。|
+|-u, --update|当把文件从一个目录移动另一个目录时，只是移动不存在的文件，或者文件内容新于目标目录相对应文件的内容。|
+|-v, --verbose|当操作 mv 命令时，显示翔实的操作信息。|
 
-mv 与 cp 共享了很多一样的选项：
+<br />
 
-<table class="multi">
-<caption class="cap">Table 5-6: mv options</caption>
-<tr>
-<th class="title">Option</th>
-<th class="title">Meaning</th>
-</tr>
-<tr>
-<td valign="top" width="25%">-i --interactive</td>
-<td valign="top">Before overwriting an existing file, prompt the user for
-confirmation. <b>If this option is not specified, mv command will silently
-overwrite files</b></td>
-</tr>
-<tr>
-<td valign="top">-u --update</td>
-<td valign="top">When moving files from one directory to another, only
-move files that either don't exist, or are newer than the
-existing corresponding files in the destination
-directory.
-</td>
-</tr>
-<tr>
-<td valign="top">-v --verbose</td>
-<td valign="top">Display informative messages as the move is performed.</td>
-</tr>
-</table>
+mv 命令示例
 
-<table class="multi">
-<caption class="cap">表5-6: mv 选项</caption>
-<tr>
-<th class="title">选项</th>
-<th class="title">意义</th>
-</tr>
-<tr>
-<td valign="top" width="25%">-i --interactive</td>
-<td valign="top">在重写一个已经存在的文件之前，提示用户确认信息。
-<b>如果不指定这个选项，mv 命令会默认重写文件内容。</b></td>
-</tr>
-<tr>
-<td valign="top">-u --update</td>
-<td valign="top">当把文件从一个目录移动另一个目录时，只是移动不存在的文件，
-或者文件内容新于目标目录相对应文件的内容。</td>
-</tr>
-<tr>
-<td valign="top">-v --verbose</td>
-<td valign="top">当操作 mv 命令时，显示翔实的操作信息。</td>
-</tr>
-</table>
+|命令|结果|
+|-----|-----|
+|mv file1 file2|移动 file1 到 file2。<b>如果 file2 存在，它的内容会被 file1 的内容重写。如果 file2 不存在，则创建 file2。<b> 每种情况下，file1 不再存在。|
+|mv -i file1 file2|除了如果 file2 存在的话，在 file2 被重写之前，用户会得到提示信息外，这个和上面的选项一样。|
+|mv file1 file2 dir1|移动 file1 和 file2 到目录 dir1 中。dir1 必须已经存在。|
+|mv dir1 dir2|如果目录 dir2 不存在，创建目录 dir2，并且移动目录 dir1 的内容到目录 dir2 中，同时删除目录 dir1。如果目录 dir2 存在，移动目录 dir1（及它的内容）到目录 dir2。|
 
-<table class="multi">
-<caption class="cap">Table 5-7: mv Examples</caption>
-<tr>
-<td class="title">mv file1 file2</td>
-<td class="title">Move file1 to file2. <b>If file2 exists, it is overwritten
-with the contents of files. </b>If file2 does not exist, it is created. <b>In
-either case, file1 ceases to exist.</b></td>
-</tr>
-<tr>
-<td valign="top" width="25%">mv -i file1 file2</td>
-<td valign="top">Same as above, except that if file2 exists, the user is
-prompted before it is overwritten.</td>
-</tr>
-<tr>
-<td valign="top">mv file1 file2 dir1</td>
-<td valign="top">Move file1 and file2 into dirctory dir1. dir1 must
-already exist.
-</td>
-</tr>
-<tr>
-<td valign="top">mv dir1 dir2</td>
-<td valign="top">if directory dir2 does not exist, create directory dir2 and
-move the contents of directory dir1 into dir2 and delete directory dir1.
-if directory dir2 does exist, move directory dir1 (and its contents) into
-directory dir2.</td>
-</tr>
-</table>
-
-<table class="multi">
-<caption class="cap">表5-7: mv 实例</caption>
-<tr>
-<td class="title">mv file1 file2</td>
-<td class="title">移动 file1 到 file2。<b>如果 file2 存在，它的内容会被 file1 的内容重写。
-</b>如果 file2 不存在，则创建 file2。<b> 每种情况下，file1 不再存在。</b></td>
-</tr>
-<tr>
-<td valign="top" width="25%">mv -i file1 file2</td>
-<td valign="top">除了如果 file2 存在的话，在 file2 被重写之前，用户会得到
-提示信息外，这个和上面的选项一样。</td>
-</tr>
-<tr>
-<td valign="top">mv file1 file2 dir1</td>
-<td valign="top">移动 file1 和 file2 到目录 dir1 中。dir1 必须已经存在。</td>
-</tr>
-<tr>
-<td valign="top">mv dir1 dir2</td>
-<td valign="top">如果目录 dir2 不存在，创建目录 dir2，并且移动目录 dir1 的内容到
-目录 dir2 中，同时删除目录 dir1。如果目录 dir2 存在，移动目录 dir1（及它的内容）到目录 dir2。</td>
-</tr>
-</table>
-
-### rm - 删除文件和目录
-
-The rm command is used to remove(delete)files and directories:
+###5.5 rm - 删除文件和目录
 
 rm 命令用来移除（删除）文件和目录：
 
-    rm item...
-
-where "item" is one or more files or directories.
+```
+rm item...
+```
 
 "item"代表一个或多个文件或目录。
 
-### 有用的选项和实例
-
-Here are some of the common options for rm:
-
 下表是一些普遍使用的 rm 选项：
 
-<table class="multi">
-<caption class="cap">Table 5-8: rm Options</caption>
-<tr>
-<th class="title">Option</th>
-<th class="title">Meaning</th>
-</tr>
-<tr>
-<td valign="top" width="25%">-i, --interactive </td>
-<td valign="top">Before deleting an existing file, prompt the user for
-confirmation. <b>If this option is not specified, rm will
-silently delete files.</b></td>
-</tr>
-<tr>
-<td valign="top">-r, --recursive </td>
-<td valign="top">Recursively delete directories. This means that if a
-directory being deleted has subdirectories, delete them too. To delete a
-directory, this option must be specified.</td>
-</tr>
-<tr>
-<td valign="top">-f, --force </td>
-<td valign="top">Ignore nonexistent files and do not prompt. This
-overrides the --interactive option.
-</td>
-</tr>
-<tr>
-<td valign="top">-v, --verbose</td>
-<td valign="top">Display informative messages as the deletion is
-performed.</td>
-</tr>
-</table>
+|选项|含义|
+|-----|-----|
+|-i, --interactive|在删除已存在的文件前，提示用户确认信息。如果不指定这个选项，rm 会默默地删除文件|
+|-r, --recursive|递归地删除文件，这意味着，如果要删除一个目录，而此目录又包含子目录，那么子目录也会被删除。要删除一个目录，必须指定这个选项。|
+|-f, --force|忽视不存在的文件，不显示提示信息。这选项覆盖了“--interactive”选项。|
+|-v, --verbose|在执行 rm 命令时，显示翔实的操作信息。|
 
-<table class="multi">
-<caption class="cap">表5-8: rm 选项</caption>
-<tr>
-<th class="title">选项</th>
-<th class="title">意义</th>
-</tr>
-<tr>
-<td valign="top" width="25%">-i, --interactive </td>
-<td
-valign="top">在删除已存在的文件前，提示用户确认信息。
-<b>如果不指定这个选项，rm 会默默地删除文件</b>
-</td>
-</tr>
-<tr>
-<td valign="top">-r, --recursive</td>
-<td valign="top">递归地删除文件，这意味着，如果要删除一个目录，而此目录
-又包含子目录，那么子目录也会被删除。要删除一个目录，必须指定这个选项。</td>
-</tr>
-<tr>
-<td valign="top">-f, --force</td>
-<td valign="top">忽视不存在的文件，不显示提示信息。这选项覆盖了“--interactive”选项。</td>
-</tr>
-<tr>
-<td valign="top">-v, --verbose</td>
-<td valign="top">在执行 rm 命令时，显示翔实的操作信息。</td>
-</tr>
-</table>
+<br />
 
-<table class="multi">
-<caption class="cap">Table 5-9: rm Examples</caption>
-<tr>
-<th class="title">Command</th>
-<th class="title">Results</th>
-</tr>
-<tr>
-<td valign="top" width="25%">rm file1</td>
-<td valign="top">Delete file1 silently</td>
-</tr>
-<tr>
-<td valign="top">rm -i file1</td>
-<td valign="top">Same as above, except that the user is prompted for
-confirmation before the deletion is performed.</td>
-</tr>
-<tr>
-<td valign="top">rm -r file1 dir1</td>
-<td valign="top">Delete file1 and dir1 and its contents.</td>
-</tr>
-<tr>
-<td valign="top">rm -rf file1 dir1</td>
-<td valign="top">Same as above, except that if either file1 or dir1 do not
-exist, rm will continue silently.</td>
-</tr>
-</table>
+rm 命令示例
 
-<table class="multi">
-<caption class="cap">表5-9: rm 实例</caption>
-<tr>
-<th class="title">命令</th>
-<th class="title">运行结果</th>
-</tr>
-<tr>
-<td valign="top" width="25%">rm file1</td>
-<td valign="top">默默地删除文件</td>
-</tr>
-<tr>
-<td valign="top">rm -i file1</td>
-<td valign="top">除了在删除文件之前，提示用户确认信息之外，和上面的命令作用一样。</td>
-</tr>
-<tr>
-<td valign="top">rm -r file1 dir1</td>
-<td valign="top">删除文件 file1, 目录 dir1，及 dir1 中的内容。</td>
-</tr>
-<tr>
-<td valign="top">rm -rf file1 dir1</td>
-<td valign="top">同上，除了如果文件 file1，或目录 dir1 不存在的话，rm 仍会继续执行。</td>
-</tr>
-</table>
+|命令|结果|
+|-----|-----|
+|rm file1|默默的删除文件，不提示用户任何信息|
+|rm -i file1|除了在删除文件之前，提示用户确认信息之外，和上面的命令作用一样。|
+|rm -r file1 dir1|删除文件 file1, 目录 dir1，及 dir1 中的内容。|
+|rm -rf file1 dir1|同上，除了如果文件 file1，或目录 dir1 不存在的话，rm 仍会继续执行。|
 
-> Be Careful With rm!
+<br />
+
+
+> ####小心 rm 命令
 >
-> 小心 rm!
+> 类 Unix 的操作系统，比如说 Linux，没有复原命令。一旦你用 rm 删除了一些东西，它就消失了。Linux 假定你很聪明，你知道你在做什么。
 >
-> Unix-like operating systems such as Linux do not have an undelete command.
-Once you delete something with rm, it's gone. Linux assumes you're smart and
-you know what you're doing.
+> 尤其要小心通配符。思考一下这个经典的例子。假如说，你只想删除一个目录中的 HTML 文件。输入：
 >
-> 类 Unix 的操作系统，比如说 Linux，没有复原命令。一旦你用 rm 删除了一些东西，
-它就消失了。Linux 假定你很聪明，你知道你在做什么。
->
-> Be particularly careful with wildcards. Consider this classic example.
-Let's say you want to delete just the HTML files in a directory.
-To do this, you type:
->
-> 尤其要小心通配符。思考一下这个经典的例子。假如说，你只想删除一个目录中的 HTML
-文件。输入：
->
->  _rm *.html_
->
-> which is correct, but if you accidentally place a space between the “*” and the “.html” like so:
+> rm *.html
 >
 > 这是正确的，如果你不小心在 “*” 和 “.html” 之间多输入了一个空格，就像这样：
 >
->  _rm * .html_
->
-> the rm command will delete all the files in the directory
-and then complain that there is no file called “.html”.
+> rm * .html
 >
 > 这个 rm 命令会删除目录中的所有文件，还会抱怨没有文件叫做 “.html”。
 >
-> _Here is a useful tip._ Whenever you use wildcards with rm (besides carefully
-checking your typing!), test the wildcard first with ls. This will let you see the
-files that will be deleted. Then press the up arrow key to recall the command and
-replace the ls with rm.
->
-> _小贴士。_ 无论什么时候，rm 命令用到通配符（除了仔细检查输入的内容外！），
-用 ls 命令来测试通配符。这会让你看到要删除的文件列表。然后按下上箭头按键，重新调用
-刚刚执行的命令，用 rm 替换 ls。
+> **提示：**无论什么时候，rm 命令用到通配符（除了仔细检查输入的内容外！），用 ls 命令来测试通配符。这会让你看到要删除的文件列表。然后按下上箭头按键，重新调用刚刚执行的命令，用 rm 替换 ls。
 
-### ln — 创建链接
+<br />
 
-The ln command is used to create either hard or symbolic links. It is used in one of two
-ways:
+###5.6 ln — 创建链接
 
 ln 命令既可创建硬链接，也可以创建符号链接。可以用其中一种方法来使用它：
 
-    ln file link
-
-to create a hard link, and:
+```
+ln file link
+```
 
 创建硬链接，和：
 
-    ln -s item link
-
-to create a symbolic link where "item" is either a file or a directory.
+```
+ln -s item link
+```
 
 创建符号链接，"item" 可以是一个文件或是一个目录。
 
-### 硬链接
+#####5.6.1 硬链接
 
-Hard links are the original Unix way of creating links; symbolic links are
-more modern. By default, every file has a single hard link that gives the file
-its name. When we create a hard link, we create an additional directory entry 
-for a file. Hard links have two important limitations:
+
 
 
 与更加现代的符号链接相比，硬链接是最初 Unix 创建链接的方式。每个文件默认会有一个硬链接，
