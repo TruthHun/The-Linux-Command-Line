@@ -1,20 +1,6 @@
----
-layout: book
-title: 探究操作系统
----
+#探究操作系统
 
-Now that we know how to move around the file system, it's time for a guided tour of our
-Linux system. Before we start however, we’re going to learn some more commands that
-will be useful along the way:
-
-既然我们已经知道了如何在文件系统中跳转，是时候开始 Linux 操作系统之旅了。然而在开始之前，我们先学习一些对研究
-Linux 系统有帮助的命令。
-
-* ls – List directory contents
-
-* file – Determine file type
-
-* less – View file contents
+既然我们已经知道了如何在文件系统中跳转，是时候开始 Linux 操作系统之旅了。然而在开始之前，我们先学习一些对研究 Linux 系统有帮助的命令。
 
 * ls — 列出目录内容
 
@@ -22,90 +8,70 @@ Linux 系统有帮助的命令。
 
 * less — 浏览文件内容
 
-### ls 乐趣
+###4.1 ls 乐趣
 
-The ls command is probably the most used command, and for good reason. With it, we
-can see directory contents and determine a variety of important file and directory
-attributes. As we have seen, we can simply type ls to see a list of files and
-subdirectories contained in the current working directory:
+ls 可能是用户最常使用的命令了，这自有它的道理。通过它，我们可以知道目录的内容，以及各种各样重要文件和目录的属性。正如我们已经见到的，只要简单地输入 ls 就能看到在当前目录下所有文件和子目录的列表。
 
-ls 可能是用户最常使用的命令了，这自有它的道理。通过它，我们可以知道目录的内容，以及各种各样重要文件和目录的
-属性。正如我们已经见到的，只要简单地输入 ls 就能看到在当前目录下所有文件和子目录的列表。
-
-    [me@linuxbox ~]$ ls
-    Desktop Documents Music Pictures Publica Templates Videos
-
-Besides the current working directory, we can specify the directory to list, like so:
+```
+[me@linuxbox ~]$ ls
+Desktop Documents Music Pictures Publica Templates Videos
+```
 
 除了当前工作目录以外，也可以指定别的目录，就像这样：
 
-    me@linuxbox ~]$ ls /usr
-    bin games   kerberos    libexec  sbin   src
-    etc include lib         local    share  tmp
-
-Or even specify multiple directories. In this example we will list both the user's home
-directory (symbolized by the “~” character) and the /usr directory:
+```
+me@linuxbox ~]$ ls /usr
+bin games   kerberos    libexec  sbin   src
+etc include lib         local    share  tmp
+```
 
 甚至可以列出多个指定目录的内容。在这个例子中，将会列出用户家目录（用字符“~”代表）和/usr 目录的内容：
 
-    [me@linuxbox ~]$ ls ~ /usr
-    /home/me:
-    Desktop  Documents  Music  Pictures  Public  Templates  Videos
+```
+[me@linuxbox ~]$ ls ~ /usr
+/home/me:
+Desktop  Documents  Music  Pictures  Public  Templates  Videos
 
-    /usr:
-    bin  games      kerberos  libexec  sbin   src
-    etc  include    lib       local    share  tmp
-
-We can also change the format of the output to reveal more detail:
+/usr:
+bin  games      kerberos  libexec  sbin   src
+etc  include    lib       local    share  tmp
+```
 
 我们也可以改变输出格式，来得到更多的细节：
 
-    [me@linuxbox ~]$ ls -l
-    total 56
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Desktop
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Documents
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Music
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Pictures
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Public
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Templates
-    drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Videos
-
-By adding “-l” to the command, we changed the output to the long format.
+```
+[me@linuxbox ~]$ ls -l
+total 56
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Desktop
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Documents
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Music
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Pictures
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Public
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Templates
+drwxrwxr-x 2  me  me  4096  2007-10-26  17:20  Videos
+```
 
 使用 ls 命令的“-l”选项，则结果以长模式输出。
 
-### 选项和参数
+####4.1.1 选项和参数
 
-This brings us to a very important point about how most commands work. Commands are often
-followed by one or more options that modify their behavior, and further, by one or more arguments,
-the items upon which the command acts. So most commands look kind of like this:
+我们将学习一个非常重要的知识点，即大多数命令是如何工作的。命令名经常会带有一个或多个用来更正命令行为的选项，更进一步，选项后面会带有一个或多个参数，这些参数是命令作用的对象。所以大多数命令看起来像这样：
 
-我们将学习一个非常重要的知识点，即大多数命令是如何工作的。命令名经常会带有一个或多个用来更正命令行为的选项，
-更进一步，选项后面会带有一个或多个参数，这些参数是命令作用的对象。所以大多数命令看起来像这样：
+```
+command -options arguments
+```
 
-    command -options arguments
+大多数命令使用的选项，是由一个中划线加上一个字符组成，例如，“-l”，但是许多命令，包括来自于 GNU 项目的命令，也支持长选项，长选项由两个中划线加上一个字组成。当然，许多命令也允许把多个短选项串在一起使用。下面这个例子，ls 命令有两个选项，“l” 选项产生长格式输出，“t”选项按文件修改时间的先后来排序。
 
-Most commands use options consisting of a single character preceded by a dash,
-for example, “-l”, but many commands, including those from the GNU Project, also support long options,
-consisting of a word preceded by two dashes. Also, many commands allow multiple short options
- to be strung together. In this example, the ls command is given two options, the “l” option
-to produce long format output, and the “t” option to sort the result by the file's modification time.
-
-大多数命令使用的选项，是由一个中划线加上一个字符组成，例如，“-l”，但是许多命令，包括来自于
-GNU 项目的命令，也支持长选项，长选项由两个中划线加上一个字组成。当然，
-许多命令也允许把多个短选项串在一起使用。下面这个例子，ls 命令有两个选项，
-“l” 选项产生长格式输出，“t”选项按文件修改时间的先后来排序。
-
-    [me@linuxbox ~]$ ls -lt
-
-We'll add the long option “--reverse” to reverse the order of the sort:
+```
+[me@linuxbox ~]$ ls -lt
+```
 
 加上长选项 “--reverse”，则结果会以相反的顺序输出：
 
-    [me@linuxbox ~]$ ls -lt --reverse
-
-The ls command has a large number of possible options. The most common are listed in
-the Table 4-1.
+```
+[me@linuxbox ~]$ ls -lt --reverse
+```
 
 ls 命令有大量的选项。表4-1列出了最常使用的选项。
 
@@ -218,9 +184,6 @@ ls display its results in ascending alphabetical order.  </td>
 
 ### 深入研究长格式输出
 
-As we saw before, the “-l” option causes ls to display its results in long format. This
-format contains a great deal of useful information. Here is the Examples directory
-from an Ubuntu system:
 
 正如我们先前知道的，“-l”选项导致 ls 的输出结果以长格式输出。这种格式包含大量的有用信息。下面的例子目录来自
 于 Ubuntu 系统：
@@ -237,7 +200,7 @@ from an Ubuntu system:
     -rw-r--r-- 1 root root  453764 2007-04-03 11:05 oo-welcome.odt
     -rw-r--r-- 1 root root  358374 2007-04-03 11:05 ubuntu Sax.ogg
 
-Let's look at the different fields from one of the files and examine their meanings:
+
 
 选一个文件，来看一下各个输出字段的含义：
 
@@ -324,11 +287,6 @@ later in this chapter.  </td>
 
 ### 确定文件类型
 
-As we explore the system it will be useful to know what files contain. To do
-this we will use the file command to determine a file's type. As we discussed earlier,
-filenames in Linux are not required to reflect a file's contents. While a filename like
-“picture.jpg” would normally be expected to contain a JPEG compressed image, it is not
-required to in Linux. We can invoke the file command this way:
 
 随着探究操作系统的进行，知道文件包含的内容是很有用的。我们将用 file 命令来确定文件的类型。我们之前讨论过，
 在 Linux 系统中，并不要求文件名来反映文件的内容。然而，一个类似 “picture.jpg” 的文件名，我们会期望它包含
@@ -336,68 +294,33 @@ JPEG 压缩图像，但 Linux 却不这样要求它。可以这样调用 file �
 
     file filename
 
-When invoked, the file command will print a brief description of the file's
-contents. For example:
-
 当调用 file 命令后，file 命令会打印出文件内容的简单描述。例如：
 
     [me@linuxbox ~]$ file picture.jpg
     picture.jpg: JPEG image data, JFIF standard 1.01
 
-There are many kinds of files. In fact, one of the common ideas in Unix-like operating
-systems such as Linux is that “everything is a file.” As we proceed with our lessons, we
-will see just how true that statement is.
 
 有许多种类型的文件。事实上，在类 Unix 操作系统中比如说 Linux 中，有个普遍的观念就是“一切皆文件”。
 随着课程的进行，我们将会明白这句话是多么的正确。
 
-While many of the files on your system are familiar, for example MP3 and JPEG, there
-are many kinds that are a little less obvious and a few that are quite strange.
 
 虽然系统中许多文件格式是熟悉的，例如 MP3和 JPEG 文件，但也有一些文件格式比较含蓄，极少数文件相当陌生。
 
 ### 用 less 浏览文件内容
 
-The less command is a program to view text files. Throughout our Linux system, there
-are many files that contain human-readable text. The less program provides a
-convenient way to examine them.
 
 less 命令是一个用来浏览文本文件的程序。纵观 Linux 系统，有许多人类可读的文本文件。less 程序为我们检查文本文件 提供了方便。
 
->What Is "Text"
->
+
+
 > 什么是“文本”
->
-> There are many ways to represent information on a computer. All methods
-involve defining a relationship between the information and some numbers that
-will be used to represent it. Computers, after all, only understand numbers and all
-data is converted to numeric representation.
 >
 > 在计算机中，有许多方法可以表达信息。所有的方法都涉及到，在信息与一些数字之间确立一种关系，而这些数字可以
 用来代表信息。毕竟，计算机只能理解数字，这样所有的数据都被转换成数值来表示。
 >
-> Some of these representation systems are very complex (such as compressed
-video files), while others are rather simple. One of the earliest and simplest is
-called ASCII text. ASCII (pronounced "As-Key") is short for American Standard
-Code for Information Interchange. This is a simple encoding scheme that was first
-used on Teletype machines to map keyboard characters to numbers.
->
 > 有些数值表达法非常复杂（例如压缩的视频文件），而其它的就相当简单。最早也是最简单的一种表达法，叫做
 ASCII 文本。ASCII（发音是"As-Key"）是美国信息交换标准码的简称。这是一个简单的编码方法，它首先
 被用在电传打字机上，用来实现键盘字符到数字的映射。
->
-> Text is a simple one-to-one mapping of characters to numbers. It is very
-compact.  Fifty characters of text translates to fifty bytes of data. It is
-important to understand that text only contains a simple mapping of characters
-to numbers. It is not the same as a word processor document such as one
-created by Microsoft Word or OpenOffice.org Writer. Those files, in contrast
-to simple ASCII text, contain many non-text elements that are used to describe
-its structure and formatting. Plain ASCII text files contain only the
-characters themselves and a few rudimentary control codes like tabs, carriage
-returns and line feeds.  Throughout a Linux system, many files are stored in
-text format and there are many Linux tools that work with text files. Even
-Windows recognizes the importance of this format. The well-known NOTEPAD.EXE
-program is an editor for plain ASCII text files.
 >
 > 文本是简单的字符与数字之间的一对一映射。它非常紧凑。五十个字符的文本翻译成五十个字节的数据。文本只是包含
 简单的字符到数字的映射，理解这点很重要。它和一些文字处理器文档不一样，比如说由微软和
@@ -408,35 +331,18 @@ OpenOffice.org 文档 编辑器创建的文件。这些文件，和简单的 ASC
 也承认这种文件格式的重要性。著名的 NOTEPAD.EXE 程序就是一个纯 ASCII
 文本文件编辑器。
 
-
-Why would we want to examine text files? Because many of the files that contain system
-settings (called configuration files) are stored in this format, and being able to read them
-gives us insight about how the system works. In addition, many of the actual programs
-that the system uses (called scripts) are stored in this format. In later chapters, we will
-learn how to edit text files in order to modify systems settings and write our own scripts,
-but for now we will just look at their contents.
-
 为什么我们要查看文本文件呢？ 因为许多包含系统设置的文件（叫做配置文件），是以文本格式存储的，阅读它们
 可以更深入的了解系统是如何工作的。另外，许多系统所用到的实际程序（叫做脚本）也是以这种格式存储的。
 在随后的章节里，我们将要学习怎样编辑文本文件以修改系统设置，还要学习编写自己的脚本文件，但现在我们只是看看它们的内容而已。
-
-The less command is used like this:
 
 less 命令是这样使用的：
 
     less filename
 
-Once started, the less program allows you to scroll forward and backward through a
-text file. For example, to examine the file that defines all the system's user accounts,
-enter the following command:
 
 一旦运行起来，less 程序允许你前后滚动文件。例如，要查看一个定义了系统中全部用户身份的文件，输入以下命令：
 
     [me@linuxbox ~]$ less /etc/passwd
-
-Once the less program starts, we may view the contents of the file. If the file is longer
-than one page, we can scroll up and down. To exit less, press the “q” key.
-The table below lists the most common keyboard commands used by less.
 
 一旦 less 程序运行起来，我们就能浏览文件内容了。如果文件内容多于一页，那么我们可以上下滚动文件。按下“q”键，
 退出 less 程序。
@@ -541,65 +447,30 @@ The table below lists the most common keyboard commands used by less.
 
 ### less 就是 more（禅语：色即是空）
 
-The less program was designed as an improved replacement of an earlier Unix
-program called more. The name “less” is a play on the phrase “less is more”—a
-motto of modernist architects and designers.
 
 less 程序是早期 Unix 程序 more 的改进版。“less” 这个名字，对习语 “less is more” 开了个玩笑，
 这个习语是现代主义建筑师和设计者的座右铭。
-
-less falls into the class of programs called “pagers,” programs that allow the
-easy viewing of long text documents in a page by page manner. Whereas the
-more program could only page forward, the less program allows paging both
-forward and backward and has many other features as well.
 
 less 属于"页面调度器"类程序，这些程序允许以逐页方式轻松浏览长文本文档。 more
 程序只能向前翻页，而 less 程序允许前后翻页，此外还有很多其它的特性。
 
 ### 旅行指南
 
-The file system layout on your Linux system is much like that found on other Unix-like
-systems. The design is actually specified in a published standard called the Linux
-Filesystem Hierarchy Standard. Not all Linux distributions conform to the standard
-exactly but most come pretty close.
-
 Linux 系统中，文件系统布局与类 Unix 系统的文件布局很相似。实际上，一个已经发布的标准，
 叫做 Linux 文件系统层次标准，详细说明了这种设计模式。不是所有Linux发行版都根据这个标准，但
 大多数都是。
 
-Next, we are going to wander around the file system ourselves to see what makes our
-Linux system tick. This will give you a chance to practice your navigation skills. One of
-the things we will discover is that many of the interesting files are in plain human-
-readable text. As we go about our tour, try the following:
-
 下一步，我们将在文件系统中漫游，来了解 Linux 系统的工作原理。这会给你一个温习跳转命令的机会。
 我们会发现很多有趣的文件都是纯人类可读文本。下面旅行开始，做做以下练习：
 
-1. cd into a given directory
-2. List the directory contents with ls -l
-3. If you see an interesting file, determine its contents with file
-4. If it looks like it might be text, try viewing it with less
 
-^
 1. cd 到给定目录
 2. 列出目录内容 ls -l
 3. 如果看到一个有趣的文件，用 file 命令确定文件内容
 4. 如果文件看起来像文本，试着用 less 命令浏览它
 
----
-
-Remember the copy and paste trick! If you are using a mouse, you can double
-click on a filename to copy it and middle click to paste it into commands.
 
 记得复制和粘贴技巧！如果你正在使用鼠标，双击文件名，来复制它，然后按下鼠标中键，粘贴文件名到命令行中。
-
----
-
-As we wander around, don't be afraid to look at stuff. Regular users are largely
-prohibited from messing things up. That's the system administrators job! If a command
-complains about something, just move on to something else. Spend some time looking
-around. The system is ours to explore. Remember, in Linux, there are no secrets!
-Table 4-4 lists just a few of the directories we can explore. Feel free to try more!
 
 在系统中漫游时，不要害怕四处看看。普通用户是很难把东西弄乱的。那是系统管理员的工作！
 如果一个命令抱怨一些事情，不要管它，尝试一下别的东西。花一些时间四处看看。
@@ -939,18 +810,6 @@ the resource is installed. That doesn't sound like fun at all.
 这个共享资源的程序，当每次这个资源的新版本被安装后，都要让使用了它的程序去寻找新的资源名。
 这听起来很没趣。
 
-Here is where symbolic links save the day. Let's say we install version 2.6 of “foo,”
-which has the filename “foo-2.6” and then create a symbolic link simply called “foo” that
-points to “foo-2.6.” This means that when a program opens the file “foo”, it is actually
-opening the file “foo-2.6”. Now everybody is happy. The programs that rely on “foo”
-can find it and we can still see what actual version is installed. When it is time to
-upgrade to “foo-2.7,” we just add the file to our system, delete the symbolic link “foo”
-and create a new one that points to the new version. Not only does this solve the problem
-of the version upgrade, but it also allows us to keep both versions on our machine.
-Imagine that “foo-2.7” has a bug (damn those developers!) and we need to revert to the
-old version. Again, we just delete the symbolic link pointing to the new version and
-create a new symbolic link pointing to the old version.
-
 这就是符号链接存在至今的原因。比方说，我们安装了文件 “foo” 的 2.6 版本，它的
 文件名是 “foo-2.6”，然后创建了叫做 “foo” 的符号链接，这个符号链接指向 “foo-2.6”。
 这意味着，当一个程序打开文件 “foo” 时，它实际上是打开文件 “foo-2.6”。
@@ -960,28 +819,18 @@ create a new symbolic link pointing to the old version.
 假想 “foo-2.7” 有个错误（该死的开发者！），那我们得回到原来的版本。
 一样的操作，我们只需要删除指向新版本的符号链接，然后创建指向旧版本的符号链接就可以了。
 
-The directory listing above (from the /lib directory of a Fedora system) shows a
-symbolic link called “libc.so.6” that points to a shared library file called “libc-2.6.so.”
-This means that programs looking for “libc.so.6” will actually get the file “libc-2.6.so.”
-We will learn how to create symbolic links in the next chapter.
-
 在上面列出的目录（来自于 Fedora 的 /lib 目录）展示了一个叫做 “libc.so.6” 的符号链接，这个符号链接指向一个
 叫做 “libc-2.6.so” 的共享库文件。这意味着，寻找文件 “libc.so.6” 的程序，实际上得到是文件 “libc-2.6.so”。
 在下一章节，我们将学习如何建立符号链接。
 
 ### 硬链接
 
-While we are on the subject of links, we need to mention that there is a second type of
-link called a hard link. Hard links also allow files to have multiple names, but they do it
-in a different way. We’ll talk more about the differences between symbolic and hard
-links in the next chapter.
 
 讨论到链接问题，我们需要提一下，还有一种链接类型，叫做硬链接。硬链接同样允许文件有多个名字，
 但是硬链接以不同的方法来创建多个文件名。在下一章中，我们会谈到更多符号链接与硬链接之间的差异问题。
 
 ### 拓展阅读
 
-* The full version of the Linux Filesystem Hierarchy Standard can be found here:
 
 * 完整的 Linux 文件系统层次体系标准可通过以下链接找到：
 
