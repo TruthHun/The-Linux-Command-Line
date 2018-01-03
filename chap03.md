@@ -131,7 +131,7 @@ Desktop Documents Music Pictures Public Templates Videos
 
 ####3.4.3 有用的快捷键
 
-在表3-1中，列举出了一些快速改变当前工作目录的有效方法。
+在下表中，列举出了一些快速改变当前工作目录的有效方法。
 
 |快捷键|运行结果|
 |-----|-----|
