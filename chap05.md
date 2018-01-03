@@ -79,6 +79,7 @@ cp -u *.html destination
 > 最初源于命令行界面中的想法，在图形界面中也适用。这就是使 Linux 桌面系统如此强大的众多原因中的一个
 
 <br />
+
 ###5.2 mkdir - 创建目录
 
 mkdir 命令是用来创建目录的。它这样工作：
@@ -124,87 +125,20 @@ cp item... directory
 下表列举了 cp 命令一些有用的选项（短选项和等效的长选项）：
 
 |选项|含义|
-|||
-|||
-|||
-|||
-|||
-|||
+|-----|-----|
+|-a, --archive|复制文件和目录，以及它们的属性，包括所有权和权限。通常，复本具有用户所操作文件的默认属性。|
+|-i, --interactive|在重写已存在文件之前，提示用户确认。如果这个选项不指定，cp 命令会默认重写文件。|
+|-r, --recursive|递归地复制目录及目录中的内容。当复制目录时，需要这个选项（或者-a 选项）。|
+|-u, --update|当把文件从一个目录复制到另一个目录时，仅复制目标目录中不存在的文件，或者是文件内容新于目标目录中已经存在的文件。|
+|-v, --verbose|显示翔实的命令操作信息。|
+<br />
+cp 命令示例
+
 |||
 |||
 |||
 |||
 
-
-<table class="multi">
-<caption class="cap">表5-4: cp 选项</caption>
-<tr>
-<th class="title">选项</th>
-<th class="title">意义</th>
-</tr>
-<tr>
-<td valign="top" width="25%">-a, --archive</td>
-<td valign="top">复制文件和目录，以及它们的属性，包括所有权和权限。
-通常，复本具有用户所操作文件的默认属性。</td>
-</tr>
-<tr>
-<td valign="top">-i, --interactive</td>
-<td valign="top">在重写已存在文件之前，提示用户确认。如果这个选项不指定，
-cp 命令会默认重写文件。</td>
-</tr>
-<tr>
-<td valign="top">-r, --recursive</td>
-<td valign="top">递归地复制目录及目录中的内容。当复制目录时，
-需要这个选项（或者-a 选项）。</td>
-</tr>
-<tr>
-<td valign="top">-u, --update </td>
-<td valign="top">当把文件从一个目录复制到另一个目录时，仅复制
-目标目录中不存在的文件，或者是文件内容新于目标目录中已经存在的文件。</td>
-</tr>
-<tr>
-<td valign="top">-v, --verbose</td>
-<td valign="top">显示翔实的命令操作信息</td>
-</tr>
-</table>
-
-<table class="multi">
-<caption class="cap">Table 5-5: cp Examples</caption>
-<tr>
-<th class="title">Command</th>
-<th class="title">Results</th>
-</tr>
-<tr>
-<td valign="top" width="25%">cp file1 file2</td>
-<td valign="top">Copy file1 to file2. If file2 exists, it is overwritten
-with the contents of file1. If file2 does not exist, it is created.</td>
-</tr>
-<tr>
-<td valign="top">cp -i file1 file2 </td>
-<td valign="top">Same as above, except that if file2 exists, the user is
-prompted before it is overwritten.</td>
-</tr>
-<tr>
-<td valign="top">cp file1 file2 dir1 </td>
-<td valign="top">Copy file1 and file2 into directory dir1. dir1 must
-already exist.</td>
-</tr>
-<tr>
-<td valign="top">cp dir1/* dir2 </td>
-<td valign="top">Using a wildcard, all the files in dir1 are copied
-into dir2. dir2 must already exist.</td>
-</tr>
-<tr>
-<td valign="top">cp -r dir1 dir2 </td>
-<td valign="top">Copy the contents of directory dir1 to directory
-dir2. If directory dir2 does not exist, it is created
-and, after the copy, will contain the same contents
-as directory dir1.
-If directory dir2 does exist, then directory dir1 (and
-its contents) will be copied into dir2.
-</td>
-</tr>
-</table>
 
 <table class="multi">
 <caption class="cap">表5-5: cp 实例</caption>
