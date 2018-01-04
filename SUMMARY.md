@@ -14,6 +14,11 @@
   * [第九章：键盘高级操作技巧](chap09.md)
   * [第十章：权限](chap10.md)
   * [第十一章：进程](chap11.md)
+* [配置文件和 shell 环境](xue-xi-shell.md)
+  * [第十二章 : shell 环境](chap12.md)
+  * [第十三章 : vi 简介](chap13.md)
+  * [第十四章 : 自定制 shell 提示符](chap14.md)
+
 * [常见任务和基本工具](xue-xi-shell.md)
   * [第十五章 : 软件包管理](chap15.md)
   * [第十六章 : 存储媒介](chap16.md)
@@ -25,10 +30,7 @@
   * [第二十二章 : 格式化输出](chap22.md)
   * [第二十三章 : 打印](chap23.md)
   * [第二十四章 : 编译程序](chap24.md)
-* [配置文件和 shell 环境](xue-xi-shell.md)
-  * [第十二章 : shell 环境](chap12.md)
-  * [第十三章 : vi 简介](chap13.md)
-  * [第十四章 : 自定制 shell 提示符](chap14.md)
+
 * [编写 Shell 脚本](xue-xi-shell.md)
   * [第二十五章 : 编写第一个 She25 脚本](chap15.md)
   * [第二十六章 : 启动一个项目](chap26.md)
