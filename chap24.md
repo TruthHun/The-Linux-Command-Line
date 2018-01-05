@@ -341,7 +341,7 @@ After we perform the installation, we can check that the program is ready to go:
 And there we have it!
 ```
 
-###24.5 本章总结
+###24.4 本章总结
 
 在这一章中，我们已经知道了三个简单命令：
 
